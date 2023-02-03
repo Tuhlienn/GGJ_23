@@ -6,7 +6,7 @@ namespace HexGrid
     public class HexVector
     {
         private const int UnitSize = 1;
-        private const float HorizontalOffset = 1.5f;
+        private const float StraightOffset = 1.5f;
         private const float VerticalOffset = 0.866f;
 
         private readonly int _q;
@@ -43,11 +43,16 @@ namespace HexGrid
             return new HexVector(-_r, _q + _r);
         }
 
-        public Vector2 ToPosition()
+        public Vector2 ToWorldPosition()
         {
-            float x = _r * HorizontalOffset * UnitSize;
-            float y = (_q + _r * VerticalOffset) * UnitSize;
+            float x = _r * StraightOffset * UnitSize;
+            float y = (_q * StraightOffset + _r * VerticalOffset) * UnitSize;
             return new Vector2(x, y);
+        }
+
+        public override string ToString()
+        {
+            return $"HexVector({_q},{_r},{-(_q + _r)})";
         }
 
         public override bool Equals(object obj)

@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using Extensions;
 using HexGrid;
+using UnityEngine;
 
 public class StemBranch
 {
     private readonly HexGrid<StemNode> _grid;
     private HexVector _position;
     private HexVector _direction;
+    public List<StemNode> Path { get; }
 
     private static readonly Action<StemBranch>[] PossibleActions =
     {
@@ -18,6 +21,7 @@ public class StemBranch
     public StemBranch(HexGrid<StemNode> grid, HexVector startPosition, HexVector startDirection)
     {
         _grid = grid;
+        Path = new List<StemNode>();
         _position = startPosition ?? HexVector.Zero;
         _direction = startDirection ?? HexVector.Up;
     }
@@ -29,7 +33,22 @@ public class StemBranch
 
     private void MoveForward()
     {
-        HexVector newPosition = _position + _direction;
+        MoveBy(_direction);
+    }
+
+    private void MoveLeft()
+    {
+        MoveBy(_direction.RotateLeft());
+    }
+
+    private void MoveRight()
+    {
+        MoveBy(_direction.RotateRight());
+    }
+
+    private void MoveBy(HexVector direction)
+    {
+        HexVector newPosition = _position + direction;
 
         if (_grid.HasNodeAtPosition(newPosition))
         {
@@ -39,18 +58,10 @@ public class StemBranch
 
         var newStemNode = new StemNode(newPosition, _direction);
         _grid.AddNodeAtPosition(newStemNode, newPosition);
+        Path.Add(newStemNode);
         _position = newPosition;
-    }
+        _direction = direction;
 
-    private void MoveLeft()
-    {
-        _direction = _direction.RotateLeft();
-        MoveForward();
-    }
-
-    private void MoveRight()
-    {
-        _direction = _direction.RotateRight();
-        MoveForward();
+        Debug.Log($"Moved by {_direction} to {newPosition} | {newPosition.ToWorldPosition()}");
     }
 }

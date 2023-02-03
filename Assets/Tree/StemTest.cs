@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace Tree
 {
@@ -22,6 +23,23 @@ namespace Tree
 
             _stem.Tick();
             _timer -= tickTime;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (_stem?.Branches == null || !_stem.Branches.Any())
+                return;
+
+            Gizmos.color = Color.green;
+
+            foreach (StemBranch branch in _stem.Branches)
+            {
+                Vector3[] points = branch.Path
+                    .Select(node => node.Position.ToWorldPosition())
+                    .Select(pos => new Vector3(pos.x, pos.y))
+                    .ToArray();
+                Gizmos.DrawLineStrip(points, false);
+            }
         }
     }
 }

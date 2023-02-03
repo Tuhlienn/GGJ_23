@@ -2,12 +2,12 @@
 
 public class StemNode
 {
-    private readonly HexVector _position;
-    private readonly HexVector _entryDirection;
+    public HexVector Position { get; }
+    public HexVector EntryDirection { get; }
 
     public StemNode(HexVector position, HexVector entryDirection)
     {
-        _position = position;
-        _entryDirection = entryDirection;
+        Position = position;
+        EntryDirection = entryDirection;
     }
 }
