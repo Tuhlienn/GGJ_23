@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class StemBranch
 {
-    private readonly HexGrid<StemNode> _grid;
+    private readonly Stem _stem;
     private HexVector _position;
     private HexVector _direction;
     public List<StemNode> Path { get; }
@@ -15,12 +15,14 @@ public class StemBranch
     {
         branch => branch.MoveForward(),
         branch => branch.MoveLeft(),
-        branch => branch.MoveRight()
+        branch => branch.MoveRight(),
+        branch => branch.SplitLeftAndMoveForward(),
+        branch => branch.SplitRightAndMoveForward(),
     };
 
-    public StemBranch(HexGrid<StemNode> grid, HexVector startPosition, HexVector startDirection)
+    public StemBranch(Stem stem, HexVector startPosition, HexVector startDirection)
     {
-        _grid = grid;
+        _stem = stem;
         Path = new List<StemNode>();
         _position = startPosition ?? HexVector.Zero;
         _direction = startDirection ?? HexVector.Up;
@@ -46,18 +48,34 @@ public class StemBranch
         MoveBy(_direction.RotateRight());
     }
 
+    private void SplitLeftAndMoveForward()
+    {
+        var newBranch = new StemBranch(_stem, _position, _direction.RotateLeft());
+        _stem.AddBranch(newBranch);
+
+        MoveForward();
+    }
+
+    private void SplitRightAndMoveForward()
+    {
+        var newBranch = new StemBranch(_stem, _position, _direction.RotateRight());
+        _stem.AddBranch(newBranch);
+
+        MoveForward();
+    }
+
     private void MoveBy(HexVector direction)
     {
         HexVector newPosition = _position + direction;
 
-        if (_grid.HasNodeAtPosition(newPosition))
+        if (_stem.Grid.HasNodeAtPosition(newPosition))
         {
             // TODO: Stop
             return;
         }
 
         var newStemNode = new StemNode(newPosition, _direction);
-        _grid.AddNodeAtPosition(newStemNode, newPosition);
+        _stem.Grid.AddNodeAtPosition(newStemNode, newPosition);
         Path.Add(newStemNode);
         _position = newPosition;
         _direction = direction;
