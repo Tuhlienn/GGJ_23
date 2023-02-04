@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 namespace Tree
@@ -31,7 +30,7 @@ namespace Tree
             if (_stem?.Branches == null || !_stem.Branches.Any())
                 return;
 
-            Handles.color = Color.green;
+            Gizmos.color = Color.green;
 
             foreach (StemBranch branch in _stem.Branches)
             {
@@ -39,7 +38,8 @@ namespace Tree
                     .Select(node => node.Position.ToWorldPosition())
                     .Select(pos => new Vector3(pos.x, pos.y))
                     .ToArray();
-                Handles.DrawPolyLine(points);
+
+                Gizmos.DrawLineStrip(points, false);
             }
         }
     }

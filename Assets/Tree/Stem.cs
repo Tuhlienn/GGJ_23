@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using HexGrid;
+using UnityEngine;
 
 public class Stem
 {
@@ -20,8 +21,14 @@ public class Stem
         Branches.Add(newBranch);
     }
 
+    public void RemoveBranch(StemBranch branch)
+    {
+        Branches.Remove(branch);
+    }
+
     public void Tick()
     {
+        Debug.Log($"Updating {Branches.Count} Branches");
         var lastBranches = new List<StemBranch>(Branches);
         foreach (StemBranch branch in lastBranches)
         {

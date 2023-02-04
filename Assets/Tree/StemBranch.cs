@@ -9,6 +9,7 @@ public class StemBranch
     private readonly Stem _stem;
     private HexVector _position;
     private HexVector _direction;
+    private bool _hasEnded;
     public List<StemNode> Path { get; }
 
     private static readonly Action<StemBranch>[] PossibleActions =
@@ -17,8 +18,9 @@ public class StemBranch
         branch => branch.MoveLeft(),
         branch => branch.MoveRight(),
         branch => branch.SplitLeftAndMoveForward(),
-        branch => branch.SplitRightAndMoveForward(),
+        branch => branch.SplitRightAndMoveForward()
     };
+
 
     public StemBranch(Stem stem, HexVector startPosition, HexVector startDirection)
     {
@@ -30,6 +32,9 @@ public class StemBranch
 
     public void Tick()
     {
+        if (_hasEnded)
+            return;
+
         PossibleActions.Random().Invoke(this);
     }
 
@@ -70,7 +75,7 @@ public class StemBranch
 
         if (_stem.Grid.HasNodeAtPosition(newPosition))
         {
-            // TODO: Stop
+            EndBranch();
             return;
         }
 
@@ -79,7 +84,11 @@ public class StemBranch
         Path.Add(newStemNode);
         _position = newPosition;
         _direction = direction;
+    }
 
-        Debug.Log($"Moved by {_direction} to {newPosition} | {newPosition.ToWorldPosition()}");
+    private void EndBranch()
+    {
+        //_stem.RemoveBranch(this);
+        _hasEnded = true;
     }
 }
