@@ -32,6 +32,14 @@ namespace Instructions
             currentSequence.Join(this.transform.DOScale(targetScale, 0.15f));
         }
 
+        public void OnDisable()
+        {
+            if(currentSequence != null)
+                currentSequence.Kill();
+            sprite.color = normalColor;
+            this.transform.localScale = Vector3.one * normalScale;
+        }
+
         public void OnPointerExit(PointerEventData eventData)
         {
             if(currentSequence != null)
