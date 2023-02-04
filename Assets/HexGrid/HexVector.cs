@@ -35,6 +35,7 @@ namespace HexGrid
         public HexVector LowerRight => this + DownRight;
 
         public bool IsBelowGround => ToWorldPosition().y <= 0;
+        public bool IsOnLeftScreenHalf => ToWorldPosition().x <= 0;
 
         public HexVector RotateLeft()
         {

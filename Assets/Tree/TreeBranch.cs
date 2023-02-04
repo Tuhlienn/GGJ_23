@@ -10,19 +10,22 @@ public class TreeBranch
 
     private static readonly Dictionary<InstructionType, Action<TreeBranch>> PossibleActions = new()
     {
+        { InstructionType.Empty, null },
         { InstructionType.MoveForward, branch => branch.MoveForward() },
         { InstructionType.MoveLeft, branch => branch.MoveLeft() },
         { InstructionType.MoveRight, branch => branch.MoveRight() },
         { InstructionType.SplitLeftAndMoveForward, branch => branch.SplitLeftAndMoveForward() },
-        { InstructionType.SplitRightAndMoveForward, branch => branch.SplitRightAndMoveForward() }
+        { InstructionType.SplitRightAndMoveForward, branch => branch.SplitRightAndMoveForward() },
+        { InstructionType.SplitLeftAndRight, branch => branch.SplitLeftAndRight() },
+        { InstructionType.MoveToSun, branch => branch.MoveToSun() }
     };
 
     private readonly TreeGrowthManager _treeGrowthManager;
     private HexVector _position;
     private HexVector _direction;
 
-    private readonly Instructions.Node _startInstructionNode;
-    private Instructions.Node _currentInstructionNode;
+    private readonly Node _startInstructionNode;
+    private Node _currentInstructionNode;
     private readonly List<TreeBranch> _newBranches;
 
     public bool HasEnded { get; private set; }
@@ -107,6 +110,28 @@ public class TreeBranch
     {
         AddNewBranchInDirection(_direction.RotateRight());
         MoveForward();
+    }
+
+    private void SplitLeftAndRight()
+    {
+        AddNewBranchInDirection(_direction.RotateLeft());
+        AddNewBranchInDirection(_direction.RotateRight());
+        EndBranch();
+    }
+
+    private void MoveToSun()
+    {
+        HexVector newDirection;
+        if (_direction == HexVector.Down)
+            newDirection = _position.IsOnLeftScreenHalf ? _direction.RotateRight() : _direction.RotateLeft();
+        else if (_direction == HexVector.UpLeft || _direction == HexVector.DownLeft)
+            newDirection = _direction.RotateRight();
+        else if (_direction == HexVector.UpRight || _direction == HexVector.DownRight)
+            newDirection = _direction.RotateLeft();
+        else
+            newDirection = _direction;
+
+        MoveBy(newDirection);
     }
 
     private void AddNewBranchInDirection(HexVector newDirection)
