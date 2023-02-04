@@ -7,7 +7,6 @@ using Tree;
 
 public class TreeBranch
 {
-
     private static readonly Dictionary<InstructionType, Action<TreeBranch>> PossibleActions = new()
     {
         { InstructionType.Empty, null },
@@ -51,7 +50,6 @@ public class TreeBranch
         _newBranches = new List<TreeBranch>();
         Path = new List<BranchNode> { startNode };
         _treeGrowthManager.Grid.AddNodeAtPosition(startNode, startNode.Position);
-        MoveForward();
     }
 
     public void PreCalculateInstruction()
@@ -139,7 +137,9 @@ public class TreeBranch
 
     private void AddNewBranchInDirection(HexVector newDirection)
     {
-        _newBranches.Add(new TreeBranch(_treeGrowthManager, new BranchNode(_position, _direction), newDirection, _startInstructionNode));
+        var newBranch = new TreeBranch(_treeGrowthManager, new BranchNode(_position, _direction), newDirection, _startInstructionNode);
+        newBranch.MoveForward();
+        _newBranches.Add(newBranch);
     }
 
     private void PlaceNodeAtCurrentPosition()
