@@ -9,36 +9,38 @@ public class NodeChannel : MonoBehaviour, IBeginDragHandler,  IDragHandler, IEnd
     public enum Type{IN, OUT};
 
     [SerializeField] private NodeConnectionVisualizer connectionPrefab;
-    private Node node;
+    private Node parentNode;
     
     private NodeChannel currentConnection;
     private NodeConnectionVisualizer currentConnectionVisualizer;
-
     private NodeConnectionVisualizer tempConnectionVisualizer;
 
     public Type type = Type.IN;
-    public Node Node => node;
+
+    public Node ParentNode => parentNode;
 
     void Awake()
     {
-        this.node = GetComponentInParent<Node>();
+        this.parentNode = GetComponentInParent<Node>();
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         pos.z = 0;
+        
         RaycastHit2D[] hits = Physics2D.CircleCastAll(pos, 1, Vector2.zero, 0);
         NodeChannel other = null;
         foreach(var h in hits)
         {
             NodeChannel channel = h.collider.gameObject.GetComponent<NodeChannel>();
-            if(channel != null && channel.type != this.type && channel.Node != this.Node)
+            if(channel != null && channel.type != this.type && channel.ParentNode != this.ParentNode)
             {
                 other = channel;
                 break;
             }
         }
+
         if(other != null && other != currentConnection)
         {
             CreateConnection(other, tempConnectionVisualizer);
