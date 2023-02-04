@@ -10,13 +10,13 @@ namespace Tree
     public class TreeGrowthManager : MonoBehaviour
     {
         [SerializeField] private float tickTime = 1;
-        [SerializeField] Node startInstructionNode;
+        [SerializeField] private Node startInstructionNode;
 
         private bool _isRunning;
         private float _timer;
         private List<HexVector> _collisions;
         public HexGrid<BranchNode> Grid { get; } = new();
-        public List<TreeBranch> Branches { get; } = new();
+        private List<TreeBranch> Branches { get; } = new();
         public event Action<List<(BranchNode current, BranchNode next)>> OnNodesUpdate;
         public event Action OnNodesReset;
 
@@ -50,9 +50,20 @@ namespace Tree
 
         private void Tick()
         {
-            List<TreeBranch> runningBranches = Branches.Where(branch => !branch.HasEnded).ToList();
+            RemoveStoppedBranches();
+
+            List<TreeBranch> runningBranches = Branches.ToList();
             PrecalculateNextStep(runningBranches);
             PerformNextStep(runningBranches);
+        }
+
+        private void RemoveStoppedBranches()
+        {
+            for (int i = Branches.Count - 1; i >= 0; i--)
+            {
+                if (Branches[i].HasEnded)
+                    Branches.Remove(Branches[i]);
+            }
         }
 
         private void PrecalculateNextStep(List<TreeBranch> branches)
