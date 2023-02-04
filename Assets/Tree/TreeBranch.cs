@@ -9,7 +9,7 @@ public class TreeBranch
 {
     private static readonly Dictionary<InstructionType, Action<TreeBranch>> PossibleActions = new()
     {
-        { InstructionType.Empty, null },
+        { InstructionType.Empty, branch => branch.SkipCurrentInstruction() },
         { InstructionType.MoveForward, branch => branch.MoveForward() },
         { InstructionType.MoveLeft, branch => branch.MoveLeft() },
         { InstructionType.MoveRight, branch => branch.MoveRight() },
@@ -55,17 +55,15 @@ public class TreeBranch
     public void PreCalculateInstruction()
     {
         _newBranches.Clear();
-        InstructionType nextInstruction = _currentInstructionNode.Instruction;
-        PossibleActions[nextInstruction]?.Invoke(this);
+        PossibleActions[_currentInstructionNode.Instruction]?.Invoke(this);
     }
 
     public void PerformInstruction(IReadOnlyCollection<HexVector> collisions)
     {
         if(_currentInstructionNode.Instruction != InstructionType.Empty)
         {
-            if (!collisions.Contains(_position))
-                PlaceNodeAtCurrentPosition();
-            else
+            PlaceNodeAtCurrentPosition();
+            if (collisions.Contains(_position))
                 EndBranch();
 
             foreach (TreeBranch branch in _newBranches.Where(branch => !collisions.Contains(branch._position)))
@@ -75,9 +73,20 @@ public class TreeBranch
             }
         }
 
+        GoToNextInstruction();
+    }
+
+    private void GoToNextInstruction()
+    {
         _currentInstructionNode = _currentInstructionNode.GetNextNode();
-        if(_currentInstructionNode == null)
+        if (_currentInstructionNode == null)
             _currentInstructionNode = _startInstructionNode;
+    }
+
+    private void SkipCurrentInstruction()
+    {
+        GoToNextInstruction();
+        PossibleActions[_currentInstructionNode.Instruction]?.Invoke(this);
     }
 
     private void MoveForward()
@@ -137,7 +146,12 @@ public class TreeBranch
 
     private void AddNewBranchInDirection(HexVector newDirection)
     {
-        var newBranch = new TreeBranch(_treeGrowthManager, new BranchNode(_position, _direction), newDirection, _startInstructionNode);
+        var newBranch = new TreeBranch(
+            _treeGrowthManager,
+            new BranchNode(_position, _direction),
+            newDirection,
+            _startInstructionNode);
+
         newBranch.MoveForward();
         _newBranches.Add(newBranch);
     }

@@ -58,18 +58,19 @@ namespace Tree
         private void PrecalculateNextStep(List<TreeBranch> branches)
         {
             IEnumerable<HexVector> nextNodes = CalculateNextPositions(branches);
-            _collisions = CalculateCollidingNodes(nextNodes);
+            _collisions = CalculateCollisions(nextNodes);
         }
 
         private void PerformNextStep(List<TreeBranch> branches)
         {
-            Debug.Log($"Updating {branches.Count} Branches");
             foreach (TreeBranch branch in branches)
             {
                 branch.PerformInstruction(_collisions);
             }
 
-            List<(BranchNode, BranchNode)> updatedNodes = branches.Select(branch => branch.LastAdded).ToList();
+            List<(BranchNode, BranchNode)> updatedNodes = Branches
+                .Where(branch => branch.Path.Count >= 2)
+                .Select(branch => branch.LastAdded).ToList();
             OnNodesUpdate?.Invoke(updatedNodes);
         }
 
@@ -85,7 +86,7 @@ namespace Tree
             return nextAddedNodes;
         }
 
-        private List<HexVector> CalculateCollidingNodes(IEnumerable<HexVector> positions)
+        private List<HexVector> CalculateCollisions(IEnumerable<HexVector> positions)
         {
             return positions
                 .GroupBy(position => position)
