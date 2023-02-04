@@ -39,8 +39,8 @@ public class TreeBranch : IInstructionMover
         _currentInstructionNode = startInstruction;
 
         _treeGrowthManager = treeGrowthManager;
-        _position = startPosition ?? HexVector.Zero;
-        _direction = startDirection ?? HexVector.Up;
+        _position = startPosition;
+        _direction = startDirection;
         _newBranches = new List<TreeBranch>();
         Path = new List<BranchNode>();
         PlaceNodeAtCurrentPosition();

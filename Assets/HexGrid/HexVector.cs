@@ -3,15 +3,15 @@ using UnityEngine;
 
 namespace HexGrid
 {
-    public class HexVector
+    public readonly struct HexVector
     {
-        private const int UnitSize = 1;
+        private const float UnitSize = 0.5f;
 
         private readonly int _q;
         private readonly int _r;
         private readonly int _s;
 
-        public HexVector(int q, int r)
+        private HexVector(int q, int r)
         {
             _q = q;
             _r = r;
@@ -34,8 +34,6 @@ namespace HexGrid
         public HexVector LowerRight => this + DownRight;
 
         public bool IsBelowGround => ToWorldPosition().y <= 0;
-
-        public int Length => (Mathf.Abs(_q) + Mathf.Abs(_r) + Mathf.Abs(_s)) / 2;
 
         public HexVector RotateLeft()
         {
