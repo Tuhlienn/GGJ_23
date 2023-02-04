@@ -1,18 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security.Cryptography;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using HexGrid;
 using Tree;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class PlantVisualizer : MonoBehaviour
 {
     private static readonly int GrowthProgress = Shader.PropertyToID("_GrowthProgress");
+    private static readonly int StartColor = Shader.PropertyToID("_StartColor");
+    private static readonly int EndColor = Shader.PropertyToID("_EndColor");
 
     [Header("Dependencies")]
     [SerializeField] private TreeGrowthManager treeGrowthManager;
@@ -32,9 +31,7 @@ public class PlantVisualizer : MonoBehaviour
     private readonly List<GameObject> _stems = new();
 
     private CancellationTokenSource _animationSource = new();
-    private uint _count;
-    private static readonly int StartColor = Shader.PropertyToID("_StartColor");
-    private static readonly int EndColor = Shader.PropertyToID("_EndColor");
+    private int _count;
 
     private void Awake()
     {
@@ -64,14 +61,11 @@ public class PlantVisualizer : MonoBehaviour
 
     private void OnVisualizeGrowth(BranchNode current, BranchNode previous)
     {
-        Vector3 position = previous.Position.ToWorldPosition();
-        position.z = _count++ * 0.01f;
-
         var stem = new GameObject($"Stem ({previous.Position})")
         {
             transform =
             {
-                position = position,
+                position = previous.Position.ToWorldPosition(),
                 rotation = Quaternion.AngleAxis(GetRotationAngleInDegrees(previous.EntryDirection), Vector3.forward)
             }
         };
@@ -79,6 +73,7 @@ public class PlantVisualizer : MonoBehaviour
         var stemRenderer = stem.AddComponent<SpriteRenderer>();
         stemRenderer.material = stemMaterial;
         stemRenderer.sprite = GetStemSprite(current, previous.EntryDirection);
+        stemRenderer.sortingOrder = _count--;
 
         var mpb = new MaterialPropertyBlock();
 
@@ -93,37 +88,20 @@ public class PlantVisualizer : MonoBehaviour
 
         async UniTaskVoid AnimateStem(CancellationToken cancellationToken)
         {
-            // float startTime = Time.time;
-
             float t = 0;
-
-            await DOTween.To(() => t, x => t = x, 1.0f, animationDuration)
-                .OnUpdate(() =>
-                {
-                    if (stemRenderer == null)
-                        return;
-
-                    stemRenderer.GetPropertyBlock(mpb);
-                    mpb.SetFloat(GrowthProgress, t);
-                    stemRenderer.SetPropertyBlock(mpb);
-                }).SetEase(Ease.OutQuad)
+            await DOTween.To(() => t, x => t = x, 1.0f, animationDuration).SetEase(Ease.OutQuad)
+                .OnUpdate(SetGrowthProgressProp)
                 .ToUniTask(TweenCancelBehaviour.Kill, cancellationToken);
 
-            // while (Time.time - startTime <= animationDuration && !cancellationToken.IsCancellationRequested && stemRenderer != null)
-            // {
-            //     float t = math.saturate((Time.time - startTime) / animationDuration);
-            //
-            //
-            //
-            //     await UniTask.NextFrame(PlayerLoopTiming.PostLateUpdate, cancellationToken);
-            // }
+            void SetGrowthProgressProp()
+            {
+                if (stemRenderer == null)
+                    return;
 
-            if (stemRenderer == null)
-                return;
-
-            stemRenderer.GetPropertyBlock(mpb);
-            mpb.SetFloat(GrowthProgress, 1.0f);
-            stemRenderer.SetPropertyBlock(mpb);
+                stemRenderer.GetPropertyBlock(mpb);
+                mpb.SetFloat(GrowthProgress, t);
+                stemRenderer.SetPropertyBlock(mpb);
+            }
         }
     }
 

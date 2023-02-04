@@ -1854,26 +1854,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: HexGrid
       objectReference: {fileID: 0}
-    - target: {fileID: 7957537575043400431, guid: 5d3c0888533ba154f8ff75de26397d80,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.84705883
-      objectReference: {fileID: 0}
-    - target: {fileID: 7957537575043400431, guid: 5d3c0888533ba154f8ff75de26397d80,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.7397672
-      objectReference: {fileID: 0}
-    - target: {fileID: 7957537575043400431, guid: 5d3c0888533ba154f8ff75de26397d80,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.53618824
-      objectReference: {fileID: 0}
-    - target: {fileID: 7957537575043400431, guid: 5d3c0888533ba154f8ff75de26397d80,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: -1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
