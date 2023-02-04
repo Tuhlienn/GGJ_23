@@ -12,14 +12,14 @@ namespace Tree
             manager.StartNewTree();
         }
 
-        private void Update()
+        /*private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 manager.StartNewTree();
                 manager.SetRunning(true);
             }
-        }
+        }*/
 
         private void OnDrawGizmos()
         {

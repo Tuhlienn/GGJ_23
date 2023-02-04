@@ -26,6 +26,9 @@ namespace Instructions
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            if(tempConnectionVisualizer == null)
+                return;
+
             Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             pos.z = 0;
             
@@ -87,6 +90,9 @@ namespace Instructions
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            if(parentNode.Locked)
+                return;
+
             tempConnectionVisualizer = Instantiate(connectionPrefab);
             tempConnectionVisualizer.p1 = new NodeConnectionVisualizer.Connection(
                 this.transform,

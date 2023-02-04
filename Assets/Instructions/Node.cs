@@ -15,7 +15,18 @@ namespace Instructions
         public InstructionType Instruction => instruction;
 
         Vector3 pointerOffset = Vector3.zero;
-        NodeArea nodeArea;
+        NodeArea nodeArea; 
+
+        private bool locked;       
+        public bool Locked {
+            get => locked;
+            set {
+                locked = value;
+                var hoverTweens = GetComponentsInChildren<HoverTween>();
+                foreach(var t in hoverTweens)
+                    t.enabled = !value;
+            }
+        }
 
         public void Awake()
         {
@@ -45,6 +56,15 @@ namespace Instructions
             return null;
         }
 
+        public void ClearConnections()
+        {
+            foreach(NodeChannel c in inputChannels)
+                c.RemoveConnection();
+                
+            foreach(NodeChannel c in outputChannels)
+                c.RemoveConnection();
+        }
+
         public void OnBeginDrag(PointerEventData eventData)
         {
             Vector3 pos = Camera.main.ScreenToWorldPoint(eventData.position);
@@ -54,7 +74,7 @@ namespace Instructions
 
         public void OnDrag(PointerEventData eventData)
         {
-            if(!draggable)
+            if(!draggable || locked)
                 return;
                 
             Vector3 pos = Camera.main.ScreenToWorldPoint(eventData.position);
