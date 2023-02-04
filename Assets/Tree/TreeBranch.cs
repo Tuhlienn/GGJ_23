@@ -4,6 +4,7 @@ using System.Linq;
 using HexGrid;
 using Instructions;
 using Tree;
+using UnityEngine;
 
 public class TreeBranch
 {
@@ -29,6 +30,8 @@ public class TreeBranch
 
     public bool HasEnded { get; private set; }
     public List<BranchNode> Path { get; }
+
+    public HexVector Position => _position;
 
     public IEnumerable<HexVector> NextMoves => _splitBranches
         .Select(branch => branch._position)

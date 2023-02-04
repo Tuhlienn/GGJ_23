@@ -21,6 +21,7 @@ namespace Tree
         public event Action<List<(BranchNode current, BranchNode next)>> OnNodesUpdate;
         public event Action OnNodesReset;
         public event Action OnTreeFinished;
+        public event Action<TreeBranch> OnBranchEnded;
 
         public void StartNewTree()
         {
@@ -84,6 +85,8 @@ namespace Tree
             foreach (TreeBranch branch in branches)
             {
                 branch.PerformInstruction(_collisions);
+                if(branch.HasEnded)
+                    OnBranchEnded?.Invoke(branch);
             }
 
             List<(BranchNode, BranchNode)> updatedNodes = Branches
