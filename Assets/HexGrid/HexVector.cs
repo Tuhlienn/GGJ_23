@@ -12,7 +12,7 @@ namespace HexGrid
         private readonly int _r;
         private readonly int _s;
 
-        private HexVector(int q, int r)
+        public HexVector(int q, int r)
         {
             _q = q;
             _r = r;
