@@ -95,7 +95,10 @@ public class TreeBranch
 
     private void SkipCurrentInstruction()
     {
+        var prevNode = _currentInstructionNode;
         GoToNextInstruction();
+        if(prevNode == _currentInstructionNode)
+            return; //we are at the same node agin -> empty instrucions tree -> break endless lope
         PossibleActions[_currentInstructionNode.Instruction]?.Invoke(this);
     }
 
