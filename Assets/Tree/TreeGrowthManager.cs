@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Extensions;
 using HexGrid;
 using Instructions;
 using UnityEngine;
@@ -11,19 +10,21 @@ namespace Tree
     public class TreeGrowthManager : MonoBehaviour
     {
         [SerializeField] private float tickTime = 1;
-        [SerializeField] Instructions.Node _startInstructionNode;
+        [SerializeField] Node startInstructionNode;
 
         private bool _isRunning;
         private float _timer;
         private List<HexVector> _collisions;
         public HexGrid<BranchNode> Grid { get; } = new();
-        public List<IInstructionMover> InstructionMovers { get; } = new();
+        public List<TreeBranch> Branches { get; } = new();
+        public event Action<List<(BranchNode current, BranchNode next)>> OnNodesUpdate;
 
         public void StartNewTree()
         {
             Grid.Clear();
-            InstructionMovers.Clear();
-            InstructionMovers.Add(new TreeBranch(this, HexVector.Zero, HexVector.Up, _startInstructionNode));
+            Branches.Clear();
+            Branches.Add(new TreeBranch(this,
+                new BranchNode(HexVector.Zero, HexVector.Up), HexVector.Up, startInstructionNode));
         }
 
         public void SetRunning(bool running)
@@ -31,7 +32,7 @@ namespace Tree
             _isRunning = running;
         }
 
-        public void RegisterMover(IInstructionMover newMover) => InstructionMovers.Add(newMover);
+        public void RegisterBranch(TreeBranch newBranch) => Branches.Add(newBranch);
 
         private void Update()
         {
@@ -48,33 +49,36 @@ namespace Tree
 
         private void Tick()
         {
-            List<IInstructionMover> runningMovers = InstructionMovers.Where(mover => !mover.HasEnded).ToList();
-            PrecalculateNextStep(runningMovers);
-            PerformNextStep(runningMovers);
+            List<TreeBranch> runningBranches = Branches.Where(branch => !branch.HasEnded).ToList();
+            PrecalculateNextStep(runningBranches);
+            PerformNextStep(runningBranches);
         }
 
-        private void PrecalculateNextStep(List<IInstructionMover> instructionMovers)
+        private void PrecalculateNextStep(List<TreeBranch> branches)
         {
-            IEnumerable<HexVector> nextNodes = CalculateNextPositions(instructionMovers);
+            IEnumerable<HexVector> nextNodes = CalculateNextPositions(branches);
             _collisions = CalculateCollidingNodes(nextNodes);
         }
 
-        private void PerformNextStep(List<IInstructionMover> instructionMovers)
+        private void PerformNextStep(List<TreeBranch> branches)
         {
-            Debug.Log($"Updating {instructionMovers.Count} Branches");
-            foreach (IInstructionMover mover in instructionMovers)
+            Debug.Log($"Updating {branches.Count} Branches");
+            foreach (TreeBranch branch in branches)
             {
-                mover.PerformInstruction(_collisions);
+                branch.PerformInstruction(_collisions);
             }
+
+            List<(BranchNode, BranchNode)> updatedNodes = branches.Select(branch => branch.LastAdded).ToList();
+            OnNodesUpdate?.Invoke(updatedNodes);
         }
 
-        private static IEnumerable<HexVector> CalculateNextPositions(List<IInstructionMover> instructionMovers)
+        private static IEnumerable<HexVector> CalculateNextPositions(List<TreeBranch> branches)
         {
             var nextAddedNodes = new List<HexVector>();
-            foreach (IInstructionMover mover in instructionMovers)
+            foreach (TreeBranch branch in branches)
             {
-                mover.PreCalculateInstruction();
-                nextAddedNodes.AddRange(mover.NextMoves);
+                branch.PreCalculateInstruction();
+                nextAddedNodes.AddRange(branch.NextMoves);
             }
 
             return nextAddedNodes;

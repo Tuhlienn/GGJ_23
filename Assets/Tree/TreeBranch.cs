@@ -5,7 +5,7 @@ using HexGrid;
 using Instructions;
 using Tree;
 
-public class TreeBranch : IInstructionMover
+public class TreeBranch
 {
 
     private static readonly Dictionary<InstructionType, Action<TreeBranch>> PossibleActions = new()
@@ -33,17 +33,21 @@ public class TreeBranch : IInstructionMover
         .Concat(new[] { _position })
         .ToList();
 
-    public TreeBranch(TreeGrowthManager treeGrowthManager, HexVector startPosition, HexVector startDirection, Instructions.Node startInstruction)
+    public (BranchNode current, BranchNode next) LastAdded => HasEnded
+        ? (Path[^1], null)
+        : (Path[^2], Path[^1]);
+
+    public TreeBranch(TreeGrowthManager treeGrowthManager, BranchNode startNode, HexVector startDirection, Node startInstruction)
     {
         _startInstructionNode = startInstruction;
         _currentInstructionNode = startInstruction;
 
         _treeGrowthManager = treeGrowthManager;
-        _position = startPosition;
+        _position = startNode.Position;
         _direction = startDirection;
         _newBranches = new List<TreeBranch>();
-        Path = new List<BranchNode>();
-        PlaceNodeAtCurrentPosition();
+        Path = new List<BranchNode> { startNode };
+        _treeGrowthManager.Grid.AddNodeAtPosition(startNode, startNode.Position);
         MoveForward();
     }
 
@@ -64,7 +68,7 @@ public class TreeBranch : IInstructionMover
         foreach (TreeBranch branch in _newBranches.Where(branch => !collisions.Contains(branch._position)))
         {
             branch.PlaceNodeAtCurrentPosition();
-            _treeGrowthManager.RegisterMover(branch);
+            _treeGrowthManager.RegisterBranch(branch);
         }
 
         _currentInstructionNode = _currentInstructionNode.GetNextNode();
@@ -95,14 +99,19 @@ public class TreeBranch : IInstructionMover
 
     private void SplitLeftAndMoveForward()
     {
-        _newBranches.Add(new TreeBranch(_treeGrowthManager, _position, _direction.RotateLeft(), _startInstructionNode));
+        AddNewBranchInDirection(_direction.RotateLeft());
         MoveForward();
     }
 
     private void SplitRightAndMoveForward()
     {
-        _newBranches.Add(new TreeBranch(_treeGrowthManager, _position, _direction.RotateRight(), _startInstructionNode));
+        AddNewBranchInDirection(_direction.RotateRight());
         MoveForward();
+    }
+
+    private void AddNewBranchInDirection(HexVector newDirection)
+    {
+        _newBranches.Add(new TreeBranch(_treeGrowthManager, new BranchNode(_position, _direction), newDirection, _startInstructionNode));
     }
 
     private void PlaceNodeAtCurrentPosition()

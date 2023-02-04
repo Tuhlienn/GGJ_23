@@ -23,14 +23,13 @@ namespace Tree
 
         private void OnDrawGizmos()
         {
-            if (!manager || manager.InstructionMovers == null || !manager.InstructionMovers.Any())
+            if (!manager || manager.Branches == null || !manager.Branches.Any())
                 return;
 
             Gizmos.color = Color.green;
 
-            foreach (IInstructionMover instructionMover in manager.InstructionMovers)
+            foreach (TreeBranch branch in manager.Branches)
             {
-                var branch = (TreeBranch)instructionMover;
                 Vector3[] points = branch.Path
                     .Select(node => node.Position.ToWorldPosition())
                     .Select(pos => new Vector3(pos.x, pos.y))
