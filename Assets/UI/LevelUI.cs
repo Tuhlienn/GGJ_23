@@ -49,7 +49,7 @@ public class LevelUI : MonoBehaviour
 
         IsRunning = false;
         UpdateButtonStates();
-        
+
         manager.SetRunning(false);
         
         foreach(Node n in nodes)
@@ -66,7 +66,7 @@ public class LevelUI : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            if(IsRunning)
+            if(!IsRunning)
                 Play();
             else
                 Stop();
