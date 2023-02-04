@@ -3,7 +3,7 @@ namespace Instructions
     using UnityEngine;
     using UnityEngine.EventSystems;
 
-    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(Collider2D))]
     public class Node : MonoBehaviour,  IDragHandler, IBeginDragHandler
     {
         [SerializeField] private bool draggable = true;
@@ -20,8 +20,8 @@ namespace Instructions
         public void Awake()
         {
             nodeArea = FindObjectOfType<NodeArea>();
-            BoxCollider2D collider = GetComponent<BoxCollider2D>();
-            size = collider.size * this.transform.lossyScale;
+            Collider2D collider = GetComponent<Collider2D>();
+            size = ((Vector2)collider.bounds.size) + new Vector2(0.5f,0.5f);
         }
 
         public Node GetPrevNode(int inIndex = 0)
