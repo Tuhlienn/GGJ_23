@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3919414195991285290}
   - component: {fileID: 532402350046749780}
   - component: {fileID: 8292281728623203852}
+  - component: {fileID: 3908592642202079236}
   - component: {fileID: 1313874153178476424}
   - component: {fileID: 101458094471737057}
   m_Layer: 5
@@ -55,9 +56,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28af21663a7563f42b7b9a18705a4f2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
   connectionPrefab: {fileID: 499132827736722563, guid: 3c1ddea9b1680f440972e026f78a6288,
     type: 3}
   type: 0
+--- !u!114 &3908592642202079236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7757107716605617892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69dbfdb97d35f0c4ba9388d67ffc5113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetColor: {r: 0.21799202, g: 0.879, b: 0.2796115, a: 1}
+  targetScale: 0.3
 --- !u!212 &1313874153178476424
 SpriteRenderer:
   m_ObjectHideFlags: 0
