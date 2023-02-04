@@ -9,13 +9,14 @@ namespace Tree
 {
     public class TreeGrowthManager : MonoBehaviour
     {
+        [SerializeField] private HexGrid.HexGrid grid;
         [SerializeField] private float tickTime = 1;
         [SerializeField] private Node startInstructionNode;
 
         private bool _isRunning;
         private float _timer;
         private List<HexVector> _collisions;
-        public HexGrid<BranchNode> Grid { get; } = new();
+        public HexGrid.HexGrid Grid => grid;
         public List<TreeBranch> Branches { get; } = new();
         public event Action<List<(BranchNode current, BranchNode next)>> OnNodesUpdate;
         public event Action OnNodesReset;

@@ -1,6 +1,6 @@
 ﻿using HexGrid;
 
-public class BranchNode
+public class BranchNode : IGridPlaceable
 {
     public HexVector Position { get; }
     public HexVector EntryDirection { get; }
