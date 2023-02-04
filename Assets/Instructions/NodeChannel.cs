@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System.Linq;
 
 public class NodeChannel : MonoBehaviour, IBeginDragHandler,  IDragHandler, IEndDragHandler
 {
@@ -18,6 +15,7 @@ public class NodeChannel : MonoBehaviour, IBeginDragHandler,  IDragHandler, IEnd
     public Type type = Type.IN;
 
     public Node ParentNode => parentNode;
+    public Node ConnectedNode => currentConnection?.ParentNode;
 
     void Awake()
     {
