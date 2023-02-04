@@ -19,6 +19,7 @@ public class LevelUI : MonoBehaviour
     void Awake()
     {
         manager = FindObjectOfType<TreeGrowthManager>();
+        manager.OnTreeFinished += Stop;
         nodes = FindObjectsOfType<Node>();
 
         Debug.Log(playButton);

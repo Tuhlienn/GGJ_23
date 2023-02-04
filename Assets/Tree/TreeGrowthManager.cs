@@ -20,6 +20,7 @@ namespace Tree
         public List<TreeBranch> Branches { get; } = new();
         public event Action<List<(BranchNode current, BranchNode next)>> OnNodesUpdate;
         public event Action OnNodesReset;
+        public event Action OnTreeFinished;
 
         public void StartNewTree()
         {
@@ -56,6 +57,11 @@ namespace Tree
             List<TreeBranch> runningBranches = Branches.ToList();
             PrecalculateNextStep(runningBranches);
             PerformNextStep(runningBranches);
+
+            if(!Branches.Any(b => !b.HasEnded)){
+                OnTreeFinished?.Invoke();
+                SetRunning(false);
+            }
         }
 
         private void RemoveStoppedBranches()
