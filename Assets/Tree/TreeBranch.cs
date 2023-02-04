@@ -35,7 +35,7 @@ public class TreeBranch
         .Concat(new[] { _position })
         .ToList();
 
-    public (BranchNode current, BranchNode next) LastAdded => HasEnded
+    public (BranchNode current, BranchNode next) LastAdded => Path.Count <= 1
         ? (Path[^1], null)
         : (Path[^2], Path[^1]);
 
