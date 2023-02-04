@@ -16,7 +16,7 @@ namespace Tree
         private float _timer;
         private List<HexVector> _collisions;
         public HexGrid<BranchNode> Grid { get; } = new();
-        private List<TreeBranch> Branches { get; } = new();
+        public List<TreeBranch> Branches { get; } = new();
         public event Action<List<(BranchNode current, BranchNode next)>> OnNodesUpdate;
         public event Action OnNodesReset;
 
