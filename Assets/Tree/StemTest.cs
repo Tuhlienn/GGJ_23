@@ -21,22 +21,22 @@ namespace Tree
             }
         }
 
-        // private void OnDrawGizmos()
-        // {
-        //     if (!manager || manager.Branches == null || !manager.Branches.Any())
-        //         return;
-        //
-        //     Gizmos.color = Color.green;
-        //
-        //     foreach (TreeBranch branch in manager.Branches)
-        //     {
-        //         Vector3[] points = branch.Path
-        //             .Select(node => node.Position.ToWorldPosition())
-        //             .Select(pos => new Vector3(pos.x, pos.y))
-        //             .ToArray();
-        //
-        //         Gizmos.DrawLineStrip(points, false);
-        //     }
-        // }
+        private void OnDrawGizmos()
+        {
+            if (!manager || manager.Branches == null || !manager.Branches.Any())
+                return;
+
+            Gizmos.color = Color.green;
+
+            foreach (TreeBranch branch in manager.Branches)
+            {
+                Vector3[] points = branch.Path
+                    .Select(node => node.Position.ToWorldPosition())
+                    .Select(pos => new Vector3(pos.x, pos.y))
+                    .ToArray();
+
+                Gizmos.DrawLineStrip(points, false);
+            }
+        }
     }
 }

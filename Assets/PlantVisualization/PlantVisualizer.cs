@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using HexGrid;
 using Tree;
 using Unity.Mathematics;
@@ -92,18 +93,33 @@ public class PlantVisualizer : MonoBehaviour
 
         async UniTaskVoid AnimateStem(CancellationToken cancellationToken)
         {
-            float startTime = Time.time;
+            // float startTime = Time.time;
 
-            while (Time.time - startTime <= animationDuration && !cancellationToken.IsCancellationRequested && stemRenderer != null)
-            {
-                float t = math.saturate((Time.time - startTime) / animationDuration);
+            float t = 0;
 
-                stemRenderer.GetPropertyBlock(mpb);
-                mpb.SetFloat(GrowthProgress, t);
-                stemRenderer.SetPropertyBlock(mpb);
+            await DOTween.To(() => t, x => t = x, 1.0f, animationDuration)
+                .OnUpdate(() =>
+                {
+                    if (stemRenderer == null)
+                        return;
 
-                await UniTask.NextFrame(PlayerLoopTiming.PostLateUpdate, cancellationToken);
-            }
+                    stemRenderer.GetPropertyBlock(mpb);
+                    mpb.SetFloat(GrowthProgress, t);
+                    stemRenderer.SetPropertyBlock(mpb);
+                }).SetEase(Ease.OutQuad)
+                .ToUniTask(TweenCancelBehaviour.Kill, cancellationToken);
+
+            // while (Time.time - startTime <= animationDuration && !cancellationToken.IsCancellationRequested && stemRenderer != null)
+            // {
+            //     float t = math.saturate((Time.time - startTime) / animationDuration);
+            //
+            //
+            //
+            //     await UniTask.NextFrame(PlayerLoopTiming.PostLateUpdate, cancellationToken);
+            // }
+
+            if (stemRenderer == null)
+                return;
 
             stemRenderer.GetPropertyBlock(mpb);
             mpb.SetFloat(GrowthProgress, 1.0f);
