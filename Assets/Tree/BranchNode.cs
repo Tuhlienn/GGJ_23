@@ -1,6 +1,6 @@
 ﻿using HexGrid;
 
-public class BranchNode
+public class BranchNode : IGridPlaceable
 {
     public enum NodeType { Default, Root }
 
