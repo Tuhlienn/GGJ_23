@@ -2,10 +2,13 @@
 {
     public enum InstructionType
     {
+        Empty,
         MoveForward,
         MoveLeft,
         MoveRight,
         SplitLeftAndMoveForward,
-        SplitRightAndMoveForward
+        SplitRightAndMoveForward,
+        SplitLeftAndRight,
+        MoveToSun
     }
 }

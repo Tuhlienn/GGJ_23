@@ -72,12 +72,12 @@ PrefabInstance:
     - target: {fileID: 3245314644508838576, guid: 4dac599e785b4f0479bf9762a26c30c5,
         type: 3}
       propertyPath: m_Name
-      value: ForwardInstruction
+      value: MoveForwardInstruction
       objectReference: {fileID: 0}
     - target: {fileID: 8333227640000971960, guid: 4dac599e785b4f0479bf9762a26c30c5,
         type: 3}
       propertyPath: instruction
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -17,7 +17,7 @@ PrefabInstance:
     - target: {fileID: 677347931397661266, guid: 4dac599e785b4f0479bf9762a26c30c5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 677347931397661266, guid: 4dac599e785b4f0479bf9762a26c30c5,
         type: 3}
@@ -69,15 +69,50 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 724402644520669766, guid: 4dac599e785b4f0479bf9762a26c30c5,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2685940473013327104, guid: 4dac599e785b4f0479bf9762a26c30c5,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 5.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2685940473013327104, guid: 4dac599e785b4f0479bf9762a26c30c5,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 5.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2685940473013327104, guid: 4dac599e785b4f0479bf9762a26c30c5,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3245314644508838576, guid: 4dac599e785b4f0479bf9762a26c30c5,
         type: 3}
       propertyPath: m_Name
       value: SplitRightMoveForward
       objectReference: {fileID: 0}
+    - target: {fileID: 3473734975215253350, guid: 4dac599e785b4f0479bf9762a26c30c5,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 5.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3473734975215253350, guid: 4dac599e785b4f0479bf9762a26c30c5,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 5.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3473734975215253350, guid: 4dac599e785b4f0479bf9762a26c30c5,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8333227640000971960, guid: 4dac599e785b4f0479bf9762a26c30c5,
         type: 3}
       propertyPath: instruction
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
