@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -28,7 +29,7 @@ namespace HexGrid
         private static HexVector GetHexPositionFromGridPosition(Vector3Int position)
         {
             int r = position.y;
-            int s = -position.x - (r - (r & 1)) / 2;
+            int s = -position.x - (r + (r & 1)) / 2;
             int q = -(r + s);
             var hexPosition = new HexVector(q, r);
             return hexPosition;
@@ -50,6 +51,15 @@ namespace HexGrid
             foreach (HexVector position in _obstaclePositions)
             {
                 AddNodeAtPosition(new ObstacleNode(), position);
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            foreach (var obstacle in _obstaclePositions)
+            {
+                Gizmos.DrawSphere(obstacle.ToWorldPosition(), 0.2f);
             }
         }
     }
