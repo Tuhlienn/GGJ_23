@@ -58,20 +58,23 @@ public class TreeBranch
     {
         _newBranches.Clear();
         InstructionType nextInstruction = _currentInstructionNode.Instruction;
-        PossibleActions[nextInstruction].Invoke(this);
+        PossibleActions[nextInstruction]?.Invoke(this);
     }
 
     public void PerformInstruction(IReadOnlyCollection<HexVector> collisions)
     {
-        if (!collisions.Contains(_position))
-            PlaceNodeAtCurrentPosition();
-        else
-            EndBranch();
-
-        foreach (TreeBranch branch in _newBranches.Where(branch => !collisions.Contains(branch._position)))
+        if(_currentInstructionNode.Instruction != InstructionType.Empty)
         {
-            branch.PlaceNodeAtCurrentPosition();
-            _treeGrowthManager.RegisterBranch(branch);
+            if (!collisions.Contains(_position))
+                PlaceNodeAtCurrentPosition();
+            else
+                EndBranch();
+
+            foreach (TreeBranch branch in _newBranches.Where(branch => !collisions.Contains(branch._position)))
+            {
+                branch.PlaceNodeAtCurrentPosition();
+                _treeGrowthManager.RegisterBranch(branch);
+            }
         }
 
         _currentInstructionNode = _currentInstructionNode.GetNextNode();
