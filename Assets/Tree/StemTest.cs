@@ -5,35 +5,32 @@ namespace Tree
 {
     public class StemTest : MonoBehaviour
     {
-        [SerializeField] private float tickTime = 1;
-
-        private float _timer;
-        private Stem _stem;
+        [SerializeField] private TreeGrowthManager manager;
 
         private void Start()
         {
-            _stem = new Stem();
+            manager.StartNewTree();
         }
 
         private void Update()
         {
-            _timer += Time.deltaTime;
-            if (_timer < tickTime)
-                return;
-
-            _stem.Tick();
-            _timer -= tickTime;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                manager.StartNewTree();
+                manager.SetRunning(true);
+            }
         }
 
         private void OnDrawGizmos()
         {
-            if (_stem?.Branches == null || !_stem.Branches.Any())
+            if (!manager || manager.InstructionMovers == null || !manager.InstructionMovers.Any())
                 return;
 
             Gizmos.color = Color.green;
 
-            foreach (StemBranch branch in _stem.Branches)
+            foreach (IInstructionMover instructionMover in manager.InstructionMovers)
             {
+                var branch = (TreeBranch)instructionMover;
                 Vector3[] points = branch.Path
                     .Select(node => node.Position.ToWorldPosition())
                     .Select(pos => new Vector3(pos.x, pos.y))

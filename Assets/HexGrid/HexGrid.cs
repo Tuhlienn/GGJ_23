@@ -16,6 +16,9 @@ namespace HexGrid
                 _nodes[position] = node;
         }
 
-        public void OverrideNodeAtPosition(T node, HexVector position) => _nodes[position] = node;
+        public void Clear()
+        {
+            _nodes.Clear();
+        }
     }
 }

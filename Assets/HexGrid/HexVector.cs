@@ -9,11 +9,13 @@ namespace HexGrid
 
         private readonly int _q;
         private readonly int _r;
+        private readonly int _s;
 
         public HexVector(int q, int r)
         {
             _q = q;
             _r = r;
+            _s = -(q + r);
         }
 
         public static HexVector Zero => new(0, 0);
@@ -31,16 +33,18 @@ namespace HexGrid
         public HexVector UpperLeft => this + UpLeft;
         public HexVector LowerRight => this + DownRight;
 
-        public bool IsBelowGround => 2 * _q + _r < 0;
+        public bool IsBelowGround => ToWorldPosition().y <= 0;
+
+        public int Length => (Mathf.Abs(_q) + Mathf.Abs(_r) + Mathf.Abs(_s)) / 2;
 
         public HexVector RotateLeft()
         {
-            return new HexVector(_q + _r, -_q);
+            return new HexVector(-_s, -_q);
         }
 
         public HexVector RotateRight()
         {
-            return new HexVector(-_r, _q + _r);
+            return new HexVector(-_r, -_s);
         }
 
         public Vector2 ToWorldPosition()
@@ -52,7 +56,7 @@ namespace HexGrid
 
         public override string ToString()
         {
-            return $"HexVector({_q},{_r},{-(_q + _r)})";
+            return $"HexVector({_q},{_r},{_s})";
         }
 
         public override bool Equals(object obj)
