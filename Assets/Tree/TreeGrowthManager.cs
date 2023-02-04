@@ -24,7 +24,7 @@ namespace Tree
         {
             Grid.Clear();
             Branches.Clear();
-            Branches.Add(new TreeBranch(this, new BranchNode(HexVector.Zero, HexVector.Up), HexVector.Up, startInstructionNode));
+            Branches.Add(new TreeBranch(this, new BranchNode(HexVector.Zero, HexVector.Up, BranchNode.NodeType.Root), HexVector.Up, startInstructionNode));
             OnNodesReset?.Invoke();
         }
 

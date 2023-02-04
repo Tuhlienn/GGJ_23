@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731715, g: 0.13414735, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -172,10 +172,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   treeGrowthManager: {fileID: 3741025541534861336}
   animationDuration: 0.3
+  defaultColor: {r: 0.14381818, g: 0.45200002, b: 0.17463633, a: 1}
+  rootColor: {r: 0.050980397, g: 0.2784314, b: 0, a: 1}
   straight: {fileID: 21300000, guid: 724d3fe3fa267184ebe987363cf06886, type: 3}
   leftTurn: {fileID: 21300000, guid: 98b1b434ce9aa2f4d8e03235c89611a9, type: 3}
   rightTurn: {fileID: 21300000, guid: 7065267c3c7ed2246b68f6e04efcf3e4, type: 3}
-  end: {fileID: 0}
+  end: {fileID: 21300000, guid: f1cdf834ad1f75b41bcbbf9d3ff5c83a, type: 3}
   stemMaterial: {fileID: 2100000, guid: eae1db1a3db9b6943be58bc616304f6a, type: 2}
 --- !u!1001 &541727974
 PrefabInstance:
@@ -411,7 +413,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.5382699, g: 0.581372, b: 0.6037736, a: 0}
+  m_BackGroundColor: {r: 0.40370238, g: 0.6928503, b: 0.8490566, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

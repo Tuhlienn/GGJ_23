@@ -148,7 +148,7 @@ public class TreeBranch
     {
         var newBranch = new TreeBranch(
             _treeGrowthManager,
-            new BranchNode(_position, _direction),
+            new BranchNode(_position, _direction, BranchNode.NodeType.Root),
             newDirection,
             _startInstructionNode);
 

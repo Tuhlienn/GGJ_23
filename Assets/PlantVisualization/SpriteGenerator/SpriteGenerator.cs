@@ -45,10 +45,12 @@ namespace PlantVisualization.SpriteGenerator
             float2 center = imageSize * 0.5f;
             float2 offset = new float2(0.0f, hexagonSize * 0.5f);
             float2 positionA = center + offset.Rotate(-60 * sideA);
-            float2 middle = sideB.HasValue ? center : math.lerp(positionA, center, 0.5f);
-            float2 positionB = sideB.HasValue ? center + offset.Rotate(-60 * sideB.Value) : center;
 
-            using NativeArray<float2> stemPositions = GenerateStemPositions(middle, positionA, positionB);
+            float2 centerAlt = math.lerp(positionA, center, 0.5f);
+            float2 controlPoint = sideB.HasValue ? center : math.lerp(positionA, centerAlt, 0.5f);
+            float2 positionB = sideB.HasValue ? center + offset.Rotate(-60 * sideB.Value) : centerAlt;
+
+            using NativeArray<float2> stemPositions = GenerateStemPositions(controlPoint, positionA, positionB);
 
             var textureData = new NativeArray<byte>(resolutionWithPadding * resolutionWithPadding * 4, Allocator.TempJob);
             var job = new GenerateStemTextureJob(textureData, resolutionWithPadding, stemRadius, stemPositions);
@@ -66,7 +68,8 @@ namespace PlantVisualization.SpriteGenerator
             var positionB3D = new float3(positionB, 0);
 
             for (var i = 0; i < 256; i++)
-            {   float3 p = BezierUtility.BezierPoint(positionA3D, math.lerp(positionA3D,  center3D, 0.5f), math.lerp(positionB3D, center3D, 0.5f), positionB3D, 1f - i / 256.0f);
+            {
+                float3 p = BezierUtility.BezierPoint(positionA3D, math.lerp(positionA3D, center3D, 0.75f), math.lerp(positionB3D, center3D, 0.75f), positionB3D, 1f - i / 256.0f);
                 positions[i] = p.xy;
             }
 
