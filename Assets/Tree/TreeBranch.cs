@@ -25,12 +25,12 @@ public class TreeBranch
 
     private readonly Node _startInstructionNode;
     private Node _currentInstructionNode;
-    private readonly List<TreeBranch> _newBranches;
+    private readonly List<TreeBranch> _splitBranches;
 
     public bool HasEnded { get; private set; }
     public List<BranchNode> Path { get; }
 
-    public IEnumerable<HexVector> NextMoves => _newBranches
+    public IEnumerable<HexVector> NextMoves => _splitBranches
         .Select(branch => branch._position)
         .Concat(new[] { _position })
         .ToList();
@@ -47,30 +47,40 @@ public class TreeBranch
         _treeGrowthManager = treeGrowthManager;
         _position = startNode.Position;
         _direction = startDirection;
-        _newBranches = new List<TreeBranch>();
+        _splitBranches = new List<TreeBranch>();
         Path = new List<BranchNode> { startNode };
         _treeGrowthManager.Grid.AddNodeAtPosition(startNode, startNode.Position);
     }
 
     public void PreCalculateInstruction()
     {
-        _newBranches.Clear();
-        PossibleActions[_currentInstructionNode.Instruction]?.Invoke(this);
+        _splitBranches.Clear();
+        PossibleActions[_currentInstructionNode.Instruction](this);
     }
 
     public void PerformInstruction(IReadOnlyCollection<HexVector> collisions)
     {
-        if(_currentInstructionNode.Instruction != InstructionType.Empty)
+        if (_currentInstructionNode.Instruction == InstructionType.Empty)
         {
-            PlaceNodeAtCurrentPosition();
-            if (collisions.Contains(_position))
-                EndBranch();
+            GoToNextInstruction();
+            return;
+        }
 
-            foreach (TreeBranch branch in _newBranches.Where(branch => !collisions.Contains(branch._position)))
+        PlaceNodeAtCurrentPosition();
+
+        if (collisions.Contains(_position))
+            EndBranch();
+
+        foreach (TreeBranch splitBranch in _splitBranches)
+        {
+            splitBranch.PlaceNodeAtCurrentPosition();
+
+            if (collisions.Contains(splitBranch._position))
             {
-                branch.PlaceNodeAtCurrentPosition();
-                _treeGrowthManager.RegisterBranch(branch);
+                splitBranch.EndBranch();
             }
+
+            _treeGrowthManager.RegisterBranch(splitBranch);
         }
 
         GoToNextInstruction();
@@ -153,7 +163,7 @@ public class TreeBranch
             _startInstructionNode);
 
         newBranch.MoveForward();
-        _newBranches.Add(newBranch);
+        _splitBranches.Add(newBranch);
     }
 
     private void PlaceNodeAtCurrentPosition()
@@ -163,7 +173,7 @@ public class TreeBranch
         Path.Add(newNode);
     }
 
-    private void EndBranch()
+    public void EndBranch()
     {
         HasEnded = true;
     }
