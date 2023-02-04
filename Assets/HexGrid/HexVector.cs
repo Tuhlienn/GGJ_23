@@ -6,8 +6,6 @@ namespace HexGrid
     public class HexVector
     {
         private const int UnitSize = 1;
-        private const float StraightOffset = 1.5f;
-        private const float VerticalOffset = 0.866f;
 
         private readonly int _q;
         private readonly int _r;
@@ -33,6 +31,8 @@ namespace HexGrid
         public HexVector UpperLeft => this + UpLeft;
         public HexVector LowerRight => this + DownRight;
 
+        public bool IsBelowGround => 2 * _q + _r < 0;
+
         public HexVector RotateLeft()
         {
             return new HexVector(_q + _r, -_q);
@@ -45,8 +45,8 @@ namespace HexGrid
 
         public Vector2 ToWorldPosition()
         {
-            float x = _r * StraightOffset * UnitSize;
-            float y = (_q * StraightOffset + _r * VerticalOffset) * UnitSize;
+            float x = _r * 3 / 2f * UnitSize;
+            float y = (_q * 3 / 2f + _r * Mathf.Sqrt(3) / 2f) * UnitSize;
             return new Vector2(x, y);
         }
 

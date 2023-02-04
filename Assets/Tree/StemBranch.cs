@@ -25,9 +25,10 @@ public class StemBranch
     public StemBranch(Stem stem, HexVector startPosition, HexVector startDirection)
     {
         _stem = stem;
-        Path = new List<StemNode>();
         _position = startPosition ?? HexVector.Zero;
         _direction = startDirection ?? HexVector.Up;
+        Path = new List<StemNode>();
+        PlaceStemNode();
     }
 
     public void Tick()
@@ -79,11 +80,16 @@ public class StemBranch
             return;
         }
 
-        var newStemNode = new StemNode(newPosition, _direction);
-        _stem.Grid.AddNodeAtPosition(newStemNode, newPosition);
-        Path.Add(newStemNode);
         _position = newPosition;
         _direction = direction;
+        PlaceStemNode();
+    }
+
+    private void PlaceStemNode()
+    {
+        var newStemNode = new StemNode(_position, _direction);
+        _stem.Grid.AddNodeAtPosition(newStemNode, _position);
+        Path.Add(newStemNode);
     }
 
     private void EndBranch()
