@@ -22,9 +22,11 @@ namespace Instructions
 
             if(spline != null)
             {
+                Vector3 center = spline.GetPosition(0) + (spline.GetPosition(1) - spline.GetPosition(0)) / 2.0f;
+                //UNITY Documentation is wrong!!! this is the correct call
                 Vector3 pos = BezierUtility.BezierPoint(
-                    spline.GetRightTangent(0), spline.GetPosition(0),
-                    spline.GetPosition(1), spline.GetLeftTangent(1),
+                    spline.GetPosition(0), spline.GetPosition(0) + spline.GetLeftTangent(0),
+                    spline.GetPosition(1) + spline.GetRightTangent(1), spline.GetPosition(1),
                     t
                 );
                 this.transform.position = pos;
