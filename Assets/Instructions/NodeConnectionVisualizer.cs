@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.U2D;
 
 
-[RequireComponent(typeof(SpriteShapeController))]
+[RequireComponent(typeof(SpriteShapeController), typeof(SpriteShapeRenderer))]
 public class NodeConnectionVisualizer : MonoBehaviour
 {
     [System.Serializable]
@@ -20,14 +20,19 @@ public class NodeConnectionVisualizer : MonoBehaviour
     public Connection p1;
     public Connection p2;
     SpriteShapeController spriteShapeController;
+    SpriteShapeRenderer spriteRenderer;
 
     void Awake()
     {
         spriteShapeController = GetComponent<SpriteShapeController>();
+        spriteRenderer = GetComponent<SpriteShapeRenderer>();
+        spriteRenderer.enabled = false;
     }
 
     void Update()
     {
+        spriteRenderer.enabled = p1 != null && p2 != null;
+
         if(p1 != null)
         {
             spriteShapeController.spline.SetPosition(0, p1.transform.position);
