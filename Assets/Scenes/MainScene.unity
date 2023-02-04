@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeGrowthManager: {fileID: 3741025541534861336}
-  animationDuration: 0.2
+  animationDuration: 0.3
   straight: {fileID: 21300000, guid: 724d3fe3fa267184ebe987363cf06886, type: 3}
   leftTurn: {fileID: 21300000, guid: 98b1b434ce9aa2f4d8e03235c89611a9, type: 3}
   rightTurn: {fileID: 21300000, guid: 7065267c3c7ed2246b68f6e04efcf3e4, type: 3}

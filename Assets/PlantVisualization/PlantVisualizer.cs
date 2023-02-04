@@ -84,7 +84,7 @@ public class PlantVisualizer : MonoBehaviour
             var mpb = new MaterialPropertyBlock();
             float startTime = Time.time;
 
-            while (Time.time - startTime <= animationDuration)
+            while (Time.time - startTime <= animationDuration && !cancellationToken.IsCancellationRequested)
             {
                 float t = math.saturate((Time.time - startTime) / animationDuration);
 
