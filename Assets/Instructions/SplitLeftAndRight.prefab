@@ -79,8 +79,14 @@ PrefabInstance:
       propertyPath: instruction
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8333227640000971960, guid: 4dac599e785b4f0479bf9762a26c30c5,
+        type: 3}
+      propertyPath: outputChannels.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8410458105395862725, guid: 4dac599e785b4f0479bf9762a26c30c5, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dac599e785b4f0479bf9762a26c30c5, type: 3}
