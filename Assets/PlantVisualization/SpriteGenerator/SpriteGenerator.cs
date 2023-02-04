@@ -14,7 +14,7 @@ namespace PlantVisualization.SpriteGenerator
         public static void GenerateStemTextures()
         {
             const int size = 512;
-            const int radius = 64;
+            const int radius = 96;
 
             const int sizeTotal = size + radius * 2 + 4;
 
@@ -23,10 +23,11 @@ namespace PlantVisualization.SpriteGenerator
             CreateTexture(3, 1);
             CreateTexture(3, 0);
             CreateTexture(3, 5);
+            CreateTexture(3, null);
 
             Object.DestroyImmediate(texture);
 
-            void CreateTexture(int sideA, int sideB)
+            void CreateTexture(int sideA, int? sideB)
             {
                 using NativeArray<byte> textureData = GenerateStemTexture(size, sideA, sideB, radius);
                 texture.LoadRawTextureData(textureData);
@@ -35,7 +36,7 @@ namespace PlantVisualization.SpriteGenerator
             }
         }
 
-        private static NativeArray<byte> GenerateStemTexture(int hexagonSize, int sideA, int sideB, int stemRadius)
+        private static NativeArray<byte> GenerateStemTexture(int hexagonSize, int sideA, int? sideB, int stemRadius)
         {
             int resolutionWithPadding = hexagonSize + stemRadius * 2 + 4;
             var imageSize = new float2(resolutionWithPadding);
@@ -43,7 +44,7 @@ namespace PlantVisualization.SpriteGenerator
             float2 center = imageSize * 0.5f;
             float2 offset = new float2(0.0f, hexagonSize * 0.5f);
             float2 positionA = center + offset.Rotate(-60 * sideA);
-            float2 positionB = center + offset.Rotate(-60 * sideB);
+            float2 positionB = sideB.HasValue ? center + offset.Rotate(-60 * sideB.Value) : center;
 
             using NativeArray<float2> stemPositions = GenerateStemPositions(center, positionA, positionB);
 
@@ -56,7 +57,7 @@ namespace PlantVisualization.SpriteGenerator
 
         private static NativeArray<float2> GenerateStemPositions(float2 center, float2 positionA, float2 positionB)
         {
-            var positions = new NativeArray<float2>(255, Allocator.TempJob);
+            var positions = new NativeArray<float2>(256, Allocator.TempJob);
 
             for (var i = 0; i < 128; i++)
                 positions[i] = math.lerp(positionB, center, i / 128.0f);

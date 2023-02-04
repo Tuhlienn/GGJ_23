@@ -18,13 +18,14 @@ namespace Tree
         public HexGrid<BranchNode> Grid { get; } = new();
         public List<TreeBranch> Branches { get; } = new();
         public event Action<List<(BranchNode current, BranchNode next)>> OnNodesUpdate;
+        public event Action OnNodesReset;
 
         public void StartNewTree()
         {
             Grid.Clear();
             Branches.Clear();
-            Branches.Add(new TreeBranch(this,
-                new BranchNode(HexVector.Zero, HexVector.Up), HexVector.Up, startInstructionNode));
+            Branches.Add(new TreeBranch(this, new BranchNode(HexVector.Zero, HexVector.Up), HexVector.Up, startInstructionNode));
+            OnNodesReset?.Invoke();
         }
 
         public void SetRunning(bool running)

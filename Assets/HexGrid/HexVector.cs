@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace HexGrid
@@ -47,8 +48,8 @@ namespace HexGrid
 
         public Vector2 ToWorldPosition()
         {
-            float x = _r * 3 / 2f * UnitSize;
-            float y = (_q * 3 / 2f + _r * Mathf.Sqrt(3) / 2f) * UnitSize;
+            float x = UnitSize * (_r * 3.0f / 2.0f);
+            float y = UnitSize * (_q * math.sqrt(3) + _r * math.sqrt(3) / 2f);
             return new Vector2(x, y);
         }
 
