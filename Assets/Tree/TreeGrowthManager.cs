@@ -11,6 +11,7 @@ namespace Tree
     public class TreeGrowthManager : MonoBehaviour
     {
         [SerializeField] private float tickTime = 1;
+        [SerializeField] Instructions.Node _startInstructionNode;
 
         private bool _isRunning;
         private float _timer;
@@ -22,7 +23,7 @@ namespace Tree
         {
             Grid.Clear();
             InstructionMovers.Clear();
-            InstructionMovers.Add(new TreeBranch(this, HexVector.Zero, HexVector.Up));
+            InstructionMovers.Add(new TreeBranch(this, HexVector.Zero, HexVector.Up, _startInstructionNode));
         }
 
         public void SetRunning(bool running)
@@ -72,7 +73,7 @@ namespace Tree
             var nextAddedNodes = new List<HexVector>();
             foreach (IInstructionMover mover in instructionMovers)
             {
-                mover.PreCalculateInstruction(((InstructionType[]) Enum.GetValues(typeof(InstructionType))).Random());
+                mover.PreCalculateInstruction();
                 nextAddedNodes.AddRange(mover.NextMoves);
             }
 

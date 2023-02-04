@@ -7,6 +7,7 @@ using Tree;
 
 public class TreeBranch : IInstructionMover
 {
+
     private static readonly Dictionary<InstructionType, Action<TreeBranch>> PossibleActions = new()
     {
         { InstructionType.MoveForward, branch => branch.MoveForward() },
@@ -20,7 +21,8 @@ public class TreeBranch : IInstructionMover
     private HexVector _position;
     private HexVector _direction;
 
-    private InstructionType _nextInstruction;
+    private readonly Instructions.Node _startInstructionNode;
+    private Instructions.Node _currentInstructionNode;
     private readonly List<TreeBranch> _newBranches;
 
     public bool HasEnded { get; private set; }
@@ -31,8 +33,11 @@ public class TreeBranch : IInstructionMover
         .Concat(new[] { _position })
         .ToList();
 
-    public TreeBranch(TreeGrowthManager treeGrowthManager, HexVector startPosition, HexVector startDirection)
+    public TreeBranch(TreeGrowthManager treeGrowthManager, HexVector startPosition, HexVector startDirection, Instructions.Node startInstruction)
     {
+        _startInstructionNode = startInstruction;
+        _currentInstructionNode = startInstruction;
+
         _treeGrowthManager = treeGrowthManager;
         _position = startPosition ?? HexVector.Zero;
         _direction = startDirection ?? HexVector.Up;
@@ -42,11 +47,11 @@ public class TreeBranch : IInstructionMover
         MoveForward();
     }
 
-    public void PreCalculateInstruction(InstructionType instruction)
+    public void PreCalculateInstruction()
     {
         _newBranches.Clear();
-        _nextInstruction = instruction;
-        PossibleActions[_nextInstruction].Invoke(this);
+        InstructionType nextInstruction = _currentInstructionNode.Instruction;
+        PossibleActions[nextInstruction].Invoke(this);
     }
 
     public void PerformInstruction(IReadOnlyCollection<HexVector> collisions)
@@ -61,6 +66,10 @@ public class TreeBranch : IInstructionMover
             branch.PlaceNodeAtCurrentPosition();
             _treeGrowthManager.RegisterMover(branch);
         }
+
+        _currentInstructionNode = _currentInstructionNode.GetNextNode();
+        if(_currentInstructionNode == null)
+            _currentInstructionNode = _startInstructionNode;
     }
 
     private void MoveForward()
@@ -86,13 +95,13 @@ public class TreeBranch : IInstructionMover
 
     private void SplitLeftAndMoveForward()
     {
-        _newBranches.Add(new TreeBranch(_treeGrowthManager, _position, _direction.RotateLeft()));
+        _newBranches.Add(new TreeBranch(_treeGrowthManager, _position, _direction.RotateLeft(), _startInstructionNode));
         MoveForward();
     }
 
     private void SplitRightAndMoveForward()
     {
-        _newBranches.Add(new TreeBranch(_treeGrowthManager, _position, _direction.RotateRight()));
+        _newBranches.Add(new TreeBranch(_treeGrowthManager, _position, _direction.RotateRight(), _startInstructionNode));
         MoveForward();
     }
 

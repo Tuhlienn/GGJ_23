@@ -6,6 +6,6 @@ public interface IInstructionMover
 {
     IEnumerable<HexVector> NextMoves { get; }
     bool HasEnded { get; }
-    void PreCalculateInstruction(InstructionType instruction);
+    void PreCalculateInstruction();
     void PerformInstruction(IReadOnlyCollection<HexVector> collisionPositions);
 }
