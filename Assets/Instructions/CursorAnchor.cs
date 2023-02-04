@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CursorAnchor : MonoBehaviour
+namespace Instructions
 {
-
-    void Update()
+    public class CursorAnchor : MonoBehaviour
     {
-        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        pos.z = 0;
-        this.transform.position = pos;   
+
+        void Update()
+        {
+            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            pos.z = 0;
+            this.transform.position = pos;   
+        }
     }
 }

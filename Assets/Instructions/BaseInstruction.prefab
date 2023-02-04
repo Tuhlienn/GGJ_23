@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 8333227640000971960}
   - component: {fileID: 677347931397661264}
   m_Layer: 5
-  m_Name: Instruction
+  m_Name: BaseInstruction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
