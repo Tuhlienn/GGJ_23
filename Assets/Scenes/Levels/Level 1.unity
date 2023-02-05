@@ -123,6 +123,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &98027592 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671754231551023900, guid: 1d70e7b08aba27045851bdc2a12f881c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1403691947}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28af21663a7563f42b7b9a18705a4f2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &536129166
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -131,6 +143,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8241410612324675378}
     m_Modifications:
+    - target: {fileID: 5559931631357189894, guid: b92fc92aeeab6464ba82495a137427ce,
+        type: 3}
+      propertyPath: forcedConnection
+      value: 
+      objectReference: {fileID: 98027592}
     - target: {fileID: 6502217916834108874, guid: b92fc92aeeab6464ba82495a137427ce,
         type: 3}
       propertyPath: m_RootOrder
@@ -1189,22 +1206,22 @@ PrefabInstance:
     - target: {fileID: 3806991736755185700, guid: d5fa50f92e347504aada5641673bf925,
         type: 3}
       propertyPath: m_TileColorArray.Array.data[0].m_Data.a
-      value: 3.4733e-41
+      value: NaN
       objectReference: {fileID: 0}
     - target: {fileID: 3806991736755185700, guid: d5fa50f92e347504aada5641673bf925,
         type: 3}
       propertyPath: m_TileColorArray.Array.data[0].m_Data.b
-      value: 3.4733e-41
+      value: NaN
       objectReference: {fileID: 0}
     - target: {fileID: 3806991736755185700, guid: d5fa50f92e347504aada5641673bf925,
         type: 3}
       propertyPath: m_TileColorArray.Array.data[0].m_Data.g
-      value: 3.4733e-41
+      value: NaN
       objectReference: {fileID: 0}
     - target: {fileID: 3806991736755185700, guid: d5fa50f92e347504aada5641673bf925,
         type: 3}
       propertyPath: m_TileColorArray.Array.data[0].m_Data.r
-      value: 3.4733e-41
+      value: NaN
       objectReference: {fileID: 0}
     - target: {fileID: 3806991736755185700, guid: d5fa50f92e347504aada5641673bf925,
         type: 3}

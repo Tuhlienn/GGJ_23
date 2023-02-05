@@ -24,6 +24,8 @@ namespace Instructions
         SpriteShapeController spriteShapeController;
         SpriteShapeRenderer spriteRenderer;
 
+        [SerializeField] Color lockedColor;
+
         void Awake()
         {
             spriteShapeController = GetComponent<SpriteShapeController>();
@@ -32,6 +34,11 @@ namespace Instructions
         }
 
         public Spline Spline => spriteShapeController.spline;
+
+        public void MarkAsLocked()
+        {
+            spriteRenderer.color = lockedColor;
+        }
 
         void Update()
         {

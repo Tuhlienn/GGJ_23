@@ -19,9 +19,16 @@ namespace Instructions
         public Node ParentNode => parentNode;
         public Node ConnectedNode => currentConnection?.ParentNode;
 
+        [Header("PREFIXED")]
+        public NodeChannel forcedConnection;
+
         void Awake()
         {
             this.parentNode = GetComponentInParent<Node>();
+            if(forcedConnection != null)
+            {
+                CreateForceConnection();
+            }
         }
 
         public void OnEndDrag(PointerEventData eventData)
@@ -44,7 +51,7 @@ namespace Instructions
                 }
             }
 
-            if(other != null && other != currentConnection)
+            if(other != null && other != currentConnection && other.forcedConnection == null)
             {
                 CreateConnection(other, tempConnectionVisualizer);
             }
@@ -90,7 +97,7 @@ namespace Instructions
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if(parentNode.Locked)
+            if(parentNode.Locked || forcedConnection != null)
                 return;
 
             tempConnectionVisualizer = Instantiate(connectionPrefab);
@@ -112,6 +119,36 @@ namespace Instructions
         private static Vector3 GetConnectionDirection(Type channelType)
         {
             return channelType == Type.IN ? Vector3.up : Vector3.down;
+        }
+    
+    
+        private void CreateForceConnection()
+        {
+            if(forcedConnection != null)
+            {
+                connectionPrefab = Instantiate(connectionPrefab);
+                this.CreateConnection(forcedConnection, connectionPrefab);
+                forcedConnection.forcedConnection = this;
+                connectionPrefab.MarkAsLocked();
+                
+
+                var selfAnimation =this.GetComponent<HoverTween>();
+                if(selfAnimation != null)
+                    Destroy(selfAnimation);
+
+                var otherAnimation =forcedConnection.GetComponent<HoverTween>();
+                if(otherAnimation != null)
+                    Destroy(otherAnimation);
+            }
+        }
+
+        public void OnDrawGizmos()
+        {
+            if(forcedConnection != null)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(this.transform.position, forcedConnection.transform.position);
+            }
         }
     }
 }

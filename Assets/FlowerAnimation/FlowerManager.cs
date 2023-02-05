@@ -23,19 +23,31 @@ public class FlowerManager : MonoBehaviour
         flowers.Clear();
     }
 
-    public void SpawnFlower(HexVector gridPos)
+    public void SpawnFlower(BranchNode branchNode)
     {
-        if(this.flowers.ContainsKey(gridPos))
+        if(branchNode == null)
+        {
+            branchNode = new BranchNode(new HexVector(0,0), HexVector.Up);
+        }
+
+        if(this.flowers.ContainsKey(branchNode.Position))
             return;
 
-        Vector3 worldPos = gridPos.ToWorldPosition();
-        worldPos.z = -1;
+
+        
+
+        //Vector3 currentHexPos = branchNode.Position.ToWorldPosition();
+
+        Vector3 pos = branchNode.Position.ToWorldPosition();
+
+
+        pos.z = -1;
 
         var flower = Instantiate(flowerPrefab, this.transform);
-        flower.transform.position = worldPos;
+        flower.transform.position = pos;
         flower.ShowBud();
         flower.ShowFlower();
 
-        flowers.Add(gridPos, flower);
+        flowers.Add(branchNode.Position, flower);
     }
 }

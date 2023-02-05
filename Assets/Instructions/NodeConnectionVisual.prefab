@@ -105,8 +105,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0623317bb54081845a46c0ad7b9bc4bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  p1: {fileID: 0}
-  p2: {fileID: 0}
+  p1:
+    direction: {x: 0, y: 0, z: 0}
+    transform: {fileID: 0}
+  p2:
+    direction: {x: 0, y: 0, z: 0}
+    transform: {fileID: 0}
+  lockedColor: {r: 0.8584906, g: 0.20652366, b: 0.20652366, a: 1}
 --- !u!114 &499132827736722560
 MonoBehaviour:
   m_ObjectHideFlags: 0
