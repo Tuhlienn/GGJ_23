@@ -12,22 +12,30 @@ public class FlowerManager : MonoBehaviour
     void Awake()
     {
         treeManager = FindObjectOfType<TreeGrowthManager>();
-        treeManager.OnBranchEnded += TreeGrowthManager_OnBranchEnded;
+        treeManager.OnFlowerEvent += SpawnFlower;
+        treeManager.OnNodesReset += ClearFlowers;
     }
 
-    void TreeGrowthManager_OnBranchEnded(TreeBranch branch)
+    public void ClearFlowers()
     {
-        HexVector girdPos = branch.Position;
+        foreach(FlowerAnimator f in flowers.Values)
+    	    Destroy(f.gameObject);
+        flowers.Clear();
+    }
 
-        if(this.flowers.ContainsKey(girdPos))
+    public void SpawnFlower(HexVector gridPos)
+    {
+        if(this.flowers.ContainsKey(gridPos))
             return;
 
-        Vector3 worldPos = girdPos.ToWorldPosition();
+        Vector3 worldPos = gridPos.ToWorldPosition();
         worldPos.z = -1;
 
         var flower = Instantiate(flowerPrefab, this.transform);
         flower.transform.position = worldPos;
         flower.ShowBud();
         flower.ShowFlower();
+
+        flowers.Add(gridPos, flower);
     }
 }

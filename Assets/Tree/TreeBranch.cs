@@ -17,7 +17,8 @@ public class TreeBranch
         { InstructionType.SplitLeftAndMoveForward, branch => branch.SplitLeftAndMoveForward() },
         { InstructionType.SplitRightAndMoveForward, branch => branch.SplitRightAndMoveForward() },
         { InstructionType.SplitLeftAndRight, branch => branch.SplitLeftAndRight() },
-        { InstructionType.MoveToSun, branch => branch.MoveToSun() }
+        { InstructionType.MoveToSun, branch => branch.MoveToSun() },
+        { InstructionType.CreateFlower, branch => branch.SpawnFlower() }
     };
 
     private readonly TreeGrowthManager _treeGrowthManager;
@@ -26,6 +27,7 @@ public class TreeBranch
 
     private readonly Node _startInstructionNode;
     private Node _currentInstructionNode;
+    private Node _startInstructionOfCurrentTick;
     private readonly List<TreeBranch> _splitBranches;
 
     public bool HasEnded { get; private set; }
@@ -57,13 +59,15 @@ public class TreeBranch
 
     public void PreCalculateInstruction()
     {
+        _startInstructionOfCurrentTick = _currentInstructionNode;
         _splitBranches.Clear();
         PossibleActions[_currentInstructionNode.Instruction](this);
     }
 
     public void PerformInstruction(IReadOnlyCollection<HexVector> collisions)
     {
-        if (_currentInstructionNode.Instruction == InstructionType.Empty)
+        if (_currentInstructionNode.Instruction == InstructionType.Empty
+             || _currentInstructionNode.Instruction == InstructionType.CreateFlower)
         {
             GoToNextInstruction();
             return;
@@ -100,8 +104,8 @@ public class TreeBranch
     {
         var prevNode = _currentInstructionNode;
         GoToNextInstruction();
-        if(prevNode == _currentInstructionNode)
-            return; //we are at the same node agin -> empty instrucions tree -> break endless lope
+        if(_currentInstructionNode == _startInstructionOfCurrentTick)
+            return; //endless loop since we are back at the same instruction
         PossibleActions[_currentInstructionNode.Instruction]?.Invoke(this);
     }
 
@@ -158,6 +162,12 @@ public class TreeBranch
             newDirection = _direction;
 
         MoveBy(newDirection);
+    }
+
+    public void SpawnFlower()
+    {
+        _treeGrowthManager.SendFlowerEvent(this._position);
+        SkipCurrentInstruction();
     }
 
     private void AddNewBranchInDirection(HexVector newDirection)

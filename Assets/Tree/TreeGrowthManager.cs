@@ -22,6 +22,8 @@ namespace Tree
         public event Action OnNodesReset;
         public event Action OnTreeFinished;
         public event Action<TreeBranch> OnBranchEnded;
+        public event Action<HexVector> OnFlowerEvent;
+
 
         public void StartNewTree()
         {
@@ -116,6 +118,11 @@ namespace Tree
                     || grouping.Count() > 1)
                 .Select(grouping => grouping.Key)
                 .ToList();
+        }
+
+        public void SendFlowerEvent(HexVector position)
+        {
+            OnFlowerEvent?.Invoke(position);
         }
     }
 }

@@ -9,6 +9,7 @@
         SplitLeftAndMoveForward,
         SplitRightAndMoveForward,
         SplitLeftAndRight,
-        MoveToSun
+        MoveToSun,
+         CreateFlower
     }
 }

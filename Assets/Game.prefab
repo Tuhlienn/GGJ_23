@@ -474,6 +474,7 @@ Transform:
   - {fileID: 2910411640549299913}
   - {fileID: 2910411640379781909}
   - {fileID: 2910411640419078424}
+  - {fileID: 2910411641007247647}
   m_Father: {fileID: 8241410611930411772}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -737,6 +738,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8241410612189201246}
   - component: {fileID: 8241410612189201217}
+  - component: {fileID: 1851503314355566928}
   m_Layer: 0
   m_Name: PlantVisualizer
   m_TagString: Untagged
@@ -780,6 +782,20 @@ MonoBehaviour:
   rightTurn: {fileID: 21300000, guid: 7065267c3c7ed2246b68f6e04efcf3e4, type: 3}
   end: {fileID: 21300000, guid: f1cdf834ad1f75b41bcbbf9d3ff5c83a, type: 3}
   stemMaterial: {fileID: 2100000, guid: eae1db1a3db9b6943be58bc616304f6a, type: 2}
+--- !u!114 &1851503314355566928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8241410612189201247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538d83c4b151f274689a01b9901aaa49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flowerPrefab: {fileID: -4812928587875197967, guid: f2f78d4a25db52d4d9b8224ad0e3311b,
+    type: 3}
 --- !u!1001 &2031551185440396483
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1812,4 +1828,83 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6502217916834108874, guid: 42f24b4d7f8b2904aba18ea230e9efbb,
     type: 3}
   m_PrefabInstance: {fileID: 8241410611791344599}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8241410612084982997
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8241410611583272646}
+    m_Modifications:
+    - target: {fileID: 6502217916834108874, guid: 7006a3f40f4a62949bfc39005877ce42,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6502217916834108874, guid: 7006a3f40f4a62949bfc39005877ce42,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6502217916834108874, guid: 7006a3f40f4a62949bfc39005877ce42,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -25.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6502217916834108874, guid: 7006a3f40f4a62949bfc39005877ce42,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6502217916834108874, guid: 7006a3f40f4a62949bfc39005877ce42,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6502217916834108874, guid: 7006a3f40f4a62949bfc39005877ce42,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6502217916834108874, guid: 7006a3f40f4a62949bfc39005877ce42,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6502217916834108874, guid: 7006a3f40f4a62949bfc39005877ce42,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6502217916834108874, guid: 7006a3f40f4a62949bfc39005877ce42,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6502217916834108874, guid: 7006a3f40f4a62949bfc39005877ce42,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6502217916834108874, guid: 7006a3f40f4a62949bfc39005877ce42,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9102694715413560616, guid: 7006a3f40f4a62949bfc39005877ce42,
+        type: 3}
+      propertyPath: m_Name
+      value: CreateFlower
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7006a3f40f4a62949bfc39005877ce42, type: 3}
+--- !u!4 &2910411641007247647 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6502217916834108874, guid: 7006a3f40f4a62949bfc39005877ce42,
+    type: 3}
+  m_PrefabInstance: {fileID: 8241410612084982997}
   m_PrefabAsset: {fileID: 0}
