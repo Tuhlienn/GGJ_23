@@ -56,10 +56,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28af21663a7563f42b7b9a18705a4f2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
   connectionPrefab: {fileID: 499132827736722563, guid: 3c1ddea9b1680f440972e026f78a6288,
     type: 3}
   type: 0
+  forcedConnection: {fileID: 0}
 --- !u!114 &3908592642202079236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69dbfdb97d35f0c4ba9388d67ffc5113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetColor: {r: 0.21799202, g: 0.879, b: 0.2796115, a: 1}
+  targetColor: {r: 0.8558952, g: 1, b: 0.24454147, a: 1}
   targetScale: 0.3
 --- !u!212 &1313874153178476424
 SpriteRenderer:
@@ -116,7 +116,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: -475868811, guid: b831386fabf6a7f41a234550fc9e9650, type: 3}
-  m_Color: {r: 0.24363652, g: 0.7075472, b: 0.28610727, a: 1}
+  m_Color: {r: 0.7686275, g: 0.8980393, b: 0.21960786, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

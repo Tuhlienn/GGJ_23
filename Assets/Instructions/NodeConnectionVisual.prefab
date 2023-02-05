@@ -76,7 +76,7 @@ SpriteShapeRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9647059, g: 0.61960787, b: 0.10980392, a: 1}
   m_MaskInteraction: 0
   m_ShapeTexture: {fileID: 0}
   m_Sprites:
@@ -111,7 +111,7 @@ MonoBehaviour:
   p2:
     direction: {x: 0, y: 0, z: 0}
     transform: {fileID: 0}
-  lockedColor: {r: 0.8584906, g: 0.20652366, b: 0.20652366, a: 1}
+  lockedColor: {r: 0.9176471, g: 0.1254902, b: 0.15294118, a: 1}
 --- !u!114 &499132827736722560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Spline:
-    m_IsOpenEnded: 0
+    m_IsOpenEnded: 1
     m_ControlPoints:
     - position: {x: 0.10855389, y: -1.4117785, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}

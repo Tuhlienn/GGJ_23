@@ -42,23 +42,24 @@ namespace Instructions
 
         void Update()
         {
-            Vector3 distance = (p2.transform.position-p1.transform.position);
+            float distance = Vector3.Distance(p1.transform.position, p2.transform.position);
 
             spriteRenderer.enabled = p1 != null && p2 != null;
 
-            if(p1 != null && p2 != null)
-            {
-                float yd = Mathf.Abs(p2.transform.position.y - p1.transform.position.y);
-                float tangentFactor = Mathf.Clamp(yd, 1, 10);
+            if (p1 == null || p2 == null)
+                return;
 
-                spriteShapeController.spline.SetPosition(0, p1.transform.position);
-                spriteShapeController.spline.SetLeftTangent(0, p1.direction  * tangentFactor);
-                spriteShapeController.spline.SetRightTangent(0, p1.direction  * tangentFactor);
+            float distanceY = Mathf.Abs(p2.transform.position.y - p1.transform.position.y);
 
-                spriteShapeController.spline.SetPosition(1, p2.transform.position);
-                spriteShapeController.spline.SetLeftTangent(1, p2.direction * tangentFactor);
-                spriteShapeController.spline.SetRightTangent(1, p2.direction * tangentFactor);
-            }    
+            float tangentFactor = Mathf.Clamp(distanceY * 0.5f, 1.5f, 5f);
+
+            spriteShapeController.spline.SetPosition(0, p1.transform.position);
+            spriteShapeController.spline.SetLeftTangent(0, p1.direction * -tangentFactor);
+            spriteShapeController.spline.SetRightTangent(0, p1.direction * tangentFactor);
+
+            spriteShapeController.spline.SetPosition(1, p2.transform.position);
+            spriteShapeController.spline.SetLeftTangent(1, p2.direction * tangentFactor);
+            spriteShapeController.spline.SetRightTangent(1, p2.direction * -tangentFactor);
         }
     }
 }
