@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using Hex;
 using UnityEngine;
 using Tree;
-using HexGrid;
 
 public class FlowerManager : MonoBehaviour
 {

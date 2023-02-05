@@ -42,15 +42,13 @@ namespace Instructions
 
         void Update()
         {
-            float distance = Vector3.Distance(p1.transform.position, p2.transform.position);
+            bool isEnabled = p1?.transform && p2?.transform;
+            spriteRenderer.enabled = isEnabled;
 
-            spriteRenderer.enabled = p1 != null && p2 != null;
-
-            if (p1 == null || p2 == null)
+            if (!isEnabled)
                 return;
 
             float distanceY = Mathf.Abs(p2.transform.position.y - p1.transform.position.y);
-
             float tangentFactor = Mathf.Clamp(distanceY * 0.5f, 1.5f, 5f);
 
             spriteShapeController.spline.SetPosition(0, p1.transform.position);
