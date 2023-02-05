@@ -70,14 +70,24 @@ namespace Instructions
             RemoveConnection();
             this.currentConnection = target;
             this.ConnectionVisualizer = visualizer;
-            visualizer.p1 = new NodeConnectionVisualizer.Connection(
+            var self = new NodeConnectionVisualizer.Connection(
                 this.transform,
                 NodeChannel.GetConnectionDirection(this.type)
             );
-            visualizer.p2 = new NodeConnectionVisualizer.Connection(
+            var other = new NodeConnectionVisualizer.Connection(
                 target.transform,
                 NodeChannel.GetConnectionDirection(target.type)
             );
+            if(this.type == Type.OUT)
+            {
+                visualizer.p1 = other;
+                visualizer.p2 = self;
+            }
+            else
+            {
+                visualizer.p1 = self;
+                visualizer.p2 = other;
+            }
             target.CreateConnection(this, visualizer);
         }
 
@@ -100,15 +110,28 @@ namespace Instructions
             if(parentNode.Locked || forcedConnection != null)
                 return;
 
+
+
             tempConnectionVisualizer = Instantiate(connectionPrefab);
-            tempConnectionVisualizer.p1 = new NodeConnectionVisualizer.Connection(
+            var self = new NodeConnectionVisualizer.Connection(
                 this.transform,
                 NodeChannel.GetConnectionDirection(this.type)
             );
-            tempConnectionVisualizer.p2 = new NodeConnectionVisualizer.Connection(
+            var other = new NodeConnectionVisualizer.Connection(
                 FindObjectOfType<CursorAnchor>().transform,
                 NodeChannel.GetConnectionDirection(this.type == Type.IN ? Type.OUT : Type.IN)
             );
+
+            if(this.type == Type.OUT)
+            {
+                tempConnectionVisualizer.p1 = other;
+                tempConnectionVisualizer.p2 = self;
+            }
+            else
+            {
+                tempConnectionVisualizer.p1 = self;
+                tempConnectionVisualizer.p2 = other;
+            }
         }
 
         public void OnDrag(PointerEventData eventData)
