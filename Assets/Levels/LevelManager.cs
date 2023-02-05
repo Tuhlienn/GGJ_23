@@ -65,7 +65,7 @@ namespace Levels
 
         private void OnFlowerAdded(BranchNode flowerNode)
         {
-            if (!_hexGrid.HasGoalAtPosition(flowerNode.Position))
+            if (flowerNode == null || !_hexGrid.HasGoalAtPosition(flowerNode.Position))
                 return;
 
             _goalsReached.Add(flowerNode.Position);
