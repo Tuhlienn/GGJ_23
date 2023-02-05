@@ -80,13 +80,13 @@ namespace Instructions
             );
             if(this.type == Type.OUT)
             {
-                visualizer.p1 = other;
-                visualizer.p2 = self;
+                visualizer.p1 = self;
+                visualizer.p2 = other;
             }
             else
             {
-                visualizer.p1 = self;
-                visualizer.p2 = other;
+                visualizer.p1 = other;
+                visualizer.p2 = self;
             }
             target.CreateConnection(this, visualizer);
         }
@@ -124,13 +124,13 @@ namespace Instructions
 
             if(this.type == Type.OUT)
             {
-                tempConnectionVisualizer.p1 = other;
-                tempConnectionVisualizer.p2 = self;
+                tempConnectionVisualizer.p1 = self;
+                tempConnectionVisualizer.p2 = other;
             }
             else
             {
-                tempConnectionVisualizer.p1 = self;
-                tempConnectionVisualizer.p2 = other;
+                tempConnectionVisualizer.p1 = other;
+                tempConnectionVisualizer.p2 = self;
             }
         }
 

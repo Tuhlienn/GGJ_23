@@ -23,6 +23,7 @@ namespace Tree
         public event Action OnTreeFinished;
         public event Action<TreeBranch> OnBranchEnded;
         public event Action<BranchNode> OnFlowerEvent;
+        public event Action OnTick;
 
         public float TickTime => tickTime;
 
@@ -66,6 +67,7 @@ namespace Tree
                 OnTreeFinished?.Invoke();
                 SetRunning(false);
             }
+            OnTick?.Invoke();
         }
 
         private void RemoveStoppedBranches()
