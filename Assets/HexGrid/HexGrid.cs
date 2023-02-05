@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -7,20 +6,23 @@ namespace HexGrid
 {
     public class HexGrid : MonoBehaviour
     {
-        [SerializeField] private Tilemap levelMap;
+        [SerializeField] private Tilemap[] obstacleMaps;
 
         private readonly List<HexVector> _obstaclePositions = new();
         private readonly Dictionary<HexVector, IGridPlaceable> _nodes = new();
 
         private void Start()
         {
-            foreach (Vector3Int position in levelMap.cellBounds.allPositionsWithin)
+            foreach (Tilemap map in obstacleMaps)
             {
-                if (!levelMap.HasTile(position))
-                    continue;
+                foreach (Vector3Int position in map.cellBounds.allPositionsWithin)
+                {
+                    if (!map.HasTile(position))
+                        continue;
 
-                HexVector hexPosition = GetHexPositionFromGridPosition(position);
-                _obstaclePositions.Add(hexPosition);
+                    HexVector hexPosition = GetHexPositionFromGridPosition(position);
+                    _obstaclePositions.Add(hexPosition);
+                }
             }
         }
 
