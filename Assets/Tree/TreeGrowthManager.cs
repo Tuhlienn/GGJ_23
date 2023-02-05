@@ -22,7 +22,7 @@ namespace Tree
         public event Action OnNodesReset;
         public event Action OnTreeFinished;
         public event Action<TreeBranch> OnBranchEnded;
-        public event Action<HexVector> OnFlowerEvent;
+        public event Action<BranchNode> OnFlowerEvent;
 
 
         public void StartNewTree()
@@ -120,9 +120,9 @@ namespace Tree
                 .ToList();
         }
 
-        public void SendFlowerEvent(HexVector position)
+        public void SendFlowerEvent(BranchNode node)
         {
-            OnFlowerEvent?.Invoke(position);
+            OnFlowerEvent?.Invoke(node);
         }
     }
 }

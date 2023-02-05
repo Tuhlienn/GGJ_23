@@ -166,7 +166,7 @@ public class TreeBranch
 
     public void SpawnFlower()
     {
-        _treeGrowthManager.SendFlowerEvent(this._position);
+        _treeGrowthManager.SendFlowerEvent(LastAdded.next);
         SkipCurrentInstruction();
     }
 
