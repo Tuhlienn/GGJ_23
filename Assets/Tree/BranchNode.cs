@@ -1,4 +1,4 @@
-﻿using HexGrid;
+﻿using Hex;
 
 public class BranchNode : IGridPlaceable
 {

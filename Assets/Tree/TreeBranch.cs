@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HexGrid;
+using Hex;
 using Instructions;
 using Tree;
 using UnityEngine;

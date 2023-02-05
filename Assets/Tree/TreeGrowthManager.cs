@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HexGrid;
+using Hex;
 using Instructions;
 using UnityEngine;
 
@@ -9,14 +9,14 @@ namespace Tree
 {
     public class TreeGrowthManager : MonoBehaviour
     {
-        [SerializeField] private HexGrid.HexGrid grid;
+        [SerializeField] private HexGrid grid;
         [SerializeField] private float tickTime = 1;
         [SerializeField] private Node startInstructionNode;
 
         private bool _isRunning;
         private float _timer;
         private List<HexVector> _collisions;
-        public HexGrid.HexGrid Grid => grid;
+        public HexGrid Grid => grid;
         public List<TreeBranch> Branches { get; } = new();
         public event Action<List<(BranchNode current, BranchNode next)>> OnNodesUpdate;
         public event Action OnNodesReset;

@@ -1,4 +1,4 @@
-﻿namespace HexGrid
+﻿namespace Hex
 {
     public interface IGridPlaceable { }
 }

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace HexGrid
+namespace Hex
 {
     public class HexGrid : MonoBehaviour
     {
@@ -53,6 +54,7 @@ namespace HexGrid
 
         public bool HasObstacleAtPosition(HexVector position) => _obstaclePositions.Contains(position) || HasNodeAtPosition(position);
         public bool HasGoalAtPosition(HexVector position) => _goalPositions.Contains(position);
+        public bool AllGoalsReached(IEnumerable<HexVector> positions) => _goalPositions.All(positions.Contains);
 
         public void AddNodeAtPosition(IGridPlaceable node, HexVector position)
         {
