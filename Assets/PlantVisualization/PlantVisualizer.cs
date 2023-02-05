@@ -6,6 +6,7 @@ using DG.Tweening;
 using Hex;
 using Tree;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlantVisualizer : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class PlantVisualizer : MonoBehaviour
     [SerializeField] private TreeGrowthManager treeGrowthManager;
 
     [Header("Settings")]
-    [SerializeField] private float animationDuration;
+    // [SerializeField] private float animationDuration;
     [SerializeField] private Color defaultColor;
     [SerializeField] private Color rootColor;
 
@@ -78,6 +79,7 @@ public class PlantVisualizer : MonoBehaviour
         var mpb = new MaterialPropertyBlock();
 
         stemRenderer.GetPropertyBlock(mpb);
+        mpb.SetFloat(GrowthProgress, 0.0f);
         mpb.SetColor(StartColor, previous.Type == BranchNode.NodeType.Root ? rootColor : defaultColor);
         mpb.SetColor(EndColor, defaultColor);
         stemRenderer.SetPropertyBlock(mpb);
@@ -89,7 +91,7 @@ public class PlantVisualizer : MonoBehaviour
         async UniTaskVoid AnimateStem(CancellationToken cancellationToken)
         {
             float t = 0;
-            await DOTween.To(() => t, x => t = x, 1.0f, animationDuration).SetEase(Ease.OutQuad)
+            await DOTween.To(() => t, x => t = x, 1.0f, treeGrowthManager.TickTime).SetEase(Ease.OutQuad)
                 .OnUpdate(SetGrowthProgressProp)
                 .ToUniTask(TweenCancelBehaviour.Kill, cancellationToken);
 

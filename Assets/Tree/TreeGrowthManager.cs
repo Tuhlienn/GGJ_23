@@ -24,6 +24,7 @@ namespace Tree
         public event Action<TreeBranch> OnBranchEnded;
         public event Action<BranchNode> OnFlowerEvent;
 
+        public float TickTime => tickTime;
 
         public void StartNewTree()
         {
@@ -114,7 +115,7 @@ namespace Tree
             return positions
                 .GroupBy(position => position)
                 .Where(grouping => grouping.Key.IsBelowGround
-                    || Grid.HasObstacleAtPosition(grouping.Key)
+                    || !Grid.HasObstacleAtPosition(grouping.Key)
                     || grouping.Count() > 1)
                 .Select(grouping => grouping.Key)
                 .ToList();
