@@ -10,7 +10,7 @@ namespace Hex
         [SerializeField] private Tilemap[] obstacleMaps;
         [SerializeField] private Tilemap goalMap;
 
-        private readonly List<HexVector> _obstaclePositions = new();
+        private readonly List<HexVector> _walkablePositions = new();
         private readonly Dictionary<HexVector, IGridPlaceable> _nodes = new();
         private readonly List<HexVector> _goalPositions = new();
 
@@ -18,7 +18,7 @@ namespace Hex
         {
             foreach (Tilemap map in obstacleMaps)
             {
-                _obstaclePositions.AddRange(GetFilledHexPositions(map));
+                _walkablePositions.AddRange(GetFilledHexPositions(map));
             }
 
             _goalPositions.AddRange(GetFilledHexPositions(goalMap));
@@ -52,7 +52,7 @@ namespace Hex
         private IGridPlaceable this[HexVector position] => _nodes.TryGetValue(position, out IGridPlaceable node) ? node : default;
         public bool HasNodeAtPosition(HexVector position) => this[position] != null;
 
-        public bool HasObstacleAtPosition(HexVector position) => _obstaclePositions.Contains(position) || HasNodeAtPosition(position);
+        public bool CanMoveTo(HexVector position) => _walkablePositions.Contains(position) && !HasNodeAtPosition(position);
         public bool HasGoalAtPosition(HexVector position) => _goalPositions.Contains(position);
         public bool AllGoalsReached(IEnumerable<HexVector> positions) => _goalPositions.All(positions.Contains);
 

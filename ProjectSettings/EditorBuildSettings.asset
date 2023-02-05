@@ -27,6 +27,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/Tutorial_Constraints.unity
     guid: 6c0a01ae02c3b2245a3c73be9c4e92fa
   - enabled: 1
+    path: Assets/Scenes/Levels/Level_Vine.unity
+    guid: 0086bc2b2c0c6ba4382708f0de5be346
+  - enabled: 1
     path: Assets/Scenes/Levels/Level_Hard_01.unity
     guid: 2d6c47292ac520a4c9d9b4da6ff9ab99
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level_Credits.unity
+    guid: cfe23fe5ead3ab548aa79f69f12e6061
   m_configObjects: {}
