@@ -83,7 +83,7 @@ namespace Instructions
 
         public void RemoveConnection()
         {
-            if(currentConnection == null)
+            if(currentConnection == null || forcedConnection != null)
                 return;
 
             var temp = currentConnection;
