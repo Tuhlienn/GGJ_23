@@ -7,23 +7,34 @@ namespace HexGrid
     public class HexGrid : MonoBehaviour
     {
         [SerializeField] private Tilemap[] obstacleMaps;
+        [SerializeField] private Tilemap goalMap;
 
         private readonly List<HexVector> _obstaclePositions = new();
         private readonly Dictionary<HexVector, IGridPlaceable> _nodes = new();
+        private readonly List<HexVector> _goalPositions = new();
 
         private void Start()
         {
             foreach (Tilemap map in obstacleMaps)
             {
-                foreach (Vector3Int position in map.cellBounds.allPositionsWithin)
-                {
-                    if (!map.HasTile(position))
-                        continue;
-
-                    HexVector hexPosition = GetHexPositionFromGridPosition(position);
-                    _obstaclePositions.Add(hexPosition);
-                }
+                _obstaclePositions.AddRange(GetFilledHexPositions(map));
             }
+
+            _goalPositions.AddRange(GetFilledHexPositions(goalMap));
+        }
+
+        private static IEnumerable<HexVector> GetFilledHexPositions(Tilemap map)
+        {
+            var result = new List<HexVector>();
+            foreach (Vector3Int position in map.cellBounds.allPositionsWithin)
+            {
+                if (!map.HasTile(position))
+                    continue;
+
+                result.Add(GetHexPositionFromGridPosition(position));
+            }
+
+            return result;
         }
 
         // row = -position.x
@@ -37,32 +48,20 @@ namespace HexGrid
             return hexPosition;
         }
 
-        public IGridPlaceable this[HexVector position] => _nodes.TryGetValue(position, out IGridPlaceable node) ? node : default;
-
+        private IGridPlaceable this[HexVector position] => _nodes.TryGetValue(position, out IGridPlaceable node) ? node : default;
         public bool HasNodeAtPosition(HexVector position) => this[position] != null;
+
+        public bool HasObstacleAtPosition(HexVector position) => _obstaclePositions.Contains(position) || HasNodeAtPosition(position);
+        public bool HasGoalAtPosition(HexVector position) => _goalPositions.Contains(position);
 
         public void AddNodeAtPosition(IGridPlaceable node, HexVector position)
         {
-            if (this[position] == null)
-                _nodes[position] = node;
+            _nodes.TryAdd(position, node);
         }
 
         public void Clear()
         {
             _nodes.Clear();
-            foreach (HexVector position in _obstaclePositions)
-            {
-                AddNodeAtPosition(new ObstacleNode(), position);
-            }
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            foreach (var obstacle in _obstaclePositions)
-            {
-                Gizmos.DrawSphere(obstacle.ToWorldPosition(), 0.2f);
-            }
         }
     }
 }

@@ -114,7 +114,7 @@ namespace Tree
             return positions
                 .GroupBy(position => position)
                 .Where(grouping => grouping.Key.IsBelowGround
-                    || Grid.HasNodeAtPosition(grouping.Key)
+                    || Grid.HasObstacleAtPosition(grouping.Key)
                     || grouping.Count() > 1)
                 .Select(grouping => grouping.Key)
                 .ToList();
