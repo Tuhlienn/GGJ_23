@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Level_Hard_01.unity
     guid: 2d6c47292ac520a4c9d9b4da6ff9ab99
+  - enabled: 1
+    path: Assets/Scenes/Levels/Tutorial_SplitDirection.unity
+    guid: 7bc186692af83ea4b91c58c5e7de4c43
   m_configObjects: {}
