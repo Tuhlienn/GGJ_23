@@ -289,7 +289,7 @@ Transform:
   - {fileID: 5836949593340927158}
   - {fileID: 572666912660352545}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7867242075887494177
 MonoBehaviour:
@@ -306,6 +306,15 @@ MonoBehaviour:
   background: {fileID: 2534062503274304880}
   flower: {fileID: 580482988009427091}
   tick: {fileID: 5749225503940108414}
+  bloomClips:
+  - {fileID: 8300000, guid: 835cfbb412eba2b429bfe3a338719955, type: 3}
+  - {fileID: 8300000, guid: 5d39c08b837cb9c44a8d2faac38bfaec, type: 3}
+  - {fileID: 8300000, guid: 5d06ff36ca25dfe40b1db238f729ab4a, type: 3}
+  - {fileID: 8300000, guid: 58da0054d240d9d4aa3c0f2d217be0f7, type: 3}
+  - {fileID: 8300000, guid: 7a5f2fb173c1be04ea8a5aba9fcf9232, type: 3}
+  - {fileID: 8300000, guid: bb36206421272b1438ed50755e63a713, type: 3}
+  - {fileID: 8300000, guid: 8db2c678a95dddf40b0138ef9f64b89c, type: 3}
+  - {fileID: 8300000, guid: 90d3a5b2cbed51145b3d7f87ed0a6d50, type: 3}
 --- !u!1 &7626297153978659388
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,9 +357,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1c0074ff0386fea48a0f08d58750d059, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.33
   m_Pitch: 1
   Loop: 0
   Mute: 0

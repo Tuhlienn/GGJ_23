@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Tree;
@@ -11,17 +10,24 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource flower;
     [SerializeField] private AudioSource tick;
 
+    [SerializeField] private List<AudioClip> bloomClips;
 
-    void Awake()
+    private void Awake()
     {
         treeManager = FindObjectOfType<TreeGrowthManager>();
 
         background.Play();
-        treeManager.OnFlowerEvent += (BranchNode b)=>{
+
+        treeManager.OnFlowerEvent += _ => {
             Debug.Log("F");
-            if(!flower.isPlaying)
-                flower.Play();
+
+            if (flower.isPlaying)
+                return;
+
+            flower.clip = bloomClips[Random.Range(0, 8)];
+            flower.Play();
         };
+
         treeManager.OnTick += ()=>{
             tick.Play();
         };
